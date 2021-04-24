@@ -46,11 +46,11 @@ export class WebTerm {
         console.info(`Spawned: ${this.id}`);
     }
 
-    resize(cols: number, rows: number) {
+    resize(cols: number, rows: number): void {
         this.term.resize(cols, rows);
     }
 
-    connect(ws: WebSocket) {
+    connect(ws: WebSocket): void {
         ws.send(WTData.SERVER_DATA + this.initialData);
 
         this.term.onData((data) => {
@@ -77,7 +77,7 @@ export class WebTerm {
             }
         });
 
-        ws.on('close', (ev) => {
+        ws.on('close', (_ev) => {
             this.term.kill();
         });
     }
@@ -87,13 +87,15 @@ export class WebTerm {
             throw new BadRequest('Command not specified!');
         }
         switch (command.option) {
-            case 'resize':
+            case 'resize': {
                 const { cols, rows }  = command;
                 if (!cols || ! rows) {
                     throw new BadRequest('Invalid Command');
                 }
                 this.resize(cols, rows);
                 return {'result':'Ok'};
+            }
+
             default:
                 throw new BadRequest('Unknown Command!');
         }

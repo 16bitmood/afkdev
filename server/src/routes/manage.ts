@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { isLoggedIn, logIn, logOut } from '../session';
+import { isLoggedIn } from '../session';
 import { BadRequest } from '../errors';
 
 import { makeApp } from '../webapps';
 
-import { setSessionApp, getSessionApp, deleteSessionApp } from '../session';
+import { setSessionApp } from '../session';
 
 const router = Router();
 

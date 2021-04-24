@@ -4,8 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "check": "npm run eslint -- --fix && npm run prettier && npm run build",
+    "check": "npm run eslint --fix && npm run prettier && npm run build",
     "build": "tsc",
+    "eslint": "eslint . --ext .ts",
+    "prettier": "prettier --write .",
     "dev": "ts-node-dev --transpile-only --no-notify src"
   },
   "dependencies": {
@@ -20,6 +22,8 @@
     "@types/http-server": "^0.10.1",
     "@types/node": "^14.14.41",
     "@types/ws": "^7.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",

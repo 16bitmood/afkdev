@@ -24,22 +24,22 @@ declare module 'express-session' {
 export const sessionParser = session(SESSION_OPTIONS);
 
 // Functions
-export function isLoggedIn(req: Request) {
+export function isLoggedIn(req: Request): boolean {
     return !!req.session.username;
 }
 
-export function logIn(req: Request, username: string) {
+export function logIn(req: Request, username: string): void {
     req.session.username = username;
     req.session.loggedInAt = Date.now();
     req.session.ip = req.ip;
     req.session.apps = new Map();
 }
 
-export function logOut(req: Request, res: Response) {
+export function logOut(req: Request, res: Response): void {
     if (!isLoggedIn(req)) {
         throw new Unauthorized();
     }
-
+    // eslint-disable-next-line
     req.session.apps!.forEach(app => app.close());
     req.session.destroy((err: Error) => {
         if (err) {
@@ -54,6 +54,7 @@ export function getSessionApp(req: Request, app_id: number): WebApp {
         throw new Unauthorized();
     }
 
+    // eslint-disable-next-line
     const app = req.session.apps!.get(app_id);
     if(!app) {
         throw new BadRequest('App does not exist');
@@ -62,7 +63,7 @@ export function getSessionApp(req: Request, app_id: number): WebApp {
 }
 
 
-export function setSessionApp(req: Request, app_id: number, app: WebApp) {
+export function setSessionApp(req: Request, app_id: number, app: WebApp): void {
     if (!isLoggedIn(req)) {
         throw new Unauthorized();
     }
@@ -70,11 +71,12 @@ export function setSessionApp(req: Request, app_id: number, app: WebApp) {
     req.session.apps!.set(app_id, app);
 }
 
-export function deleteSessionApp(req: Request, app_id: number) {
+export function deleteSessionApp(req: Request, app_id: number): void {
     if (!isLoggedIn(req)) {
         throw new Unauthorized();
     }
 
+    // eslint-disable-next-line
     const app = req.session.apps!.get(app_id);
     if (app) {
         app.close();

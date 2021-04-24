@@ -3,7 +3,7 @@ import { BadRequest } from '../errors';
 
 export type WebApp = any;
 
-export function makeApp(appName:string) {
+export function makeApp(appName:string): WebApp {
     switch (appName) {
         case 'term':
             return new WebTerm('/bin/bash', [], {cols: 90, rows: 90});

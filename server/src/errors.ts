@@ -8,7 +8,7 @@ export class BadRequest extends HttpError {
   
         this.status = 400;
     }
-};
+}
   
 export class Unauthorized extends HttpError {
     constructor (message = 'Unauthorized') {
@@ -16,4 +16,4 @@ export class Unauthorized extends HttpError {
   
         this.status = 401;
     }
-};
+}
