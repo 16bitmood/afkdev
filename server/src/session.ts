@@ -1,87 +1,90 @@
 // External Imports
-import type {  Request, Response } from 'express';
-import session from 'express-session';
-import type { WebApp } from './webapps';
+import type { Request, Response } from "express";
+import session from "express-session";
+import type { WebApp } from "./webapps";
 
 // Internal Imports
-import {
-    SESSION_OPTIONS,
-    SESSION_NAME
-} from './config';
-import { Unauthorized, BadRequest } from './errors';
+import { SESSION_OPTIONS, SESSION_NAME } from "./config";
+import { Unauthorized, BadRequest } from "./errors";
+import { STATUS_CODES } from "node:http";
 
 // Declarations
-declare module 'express-session' {
-    export interface SessionData {
-        username: string,
-        ip: string,
-        loggedInAt: number,
-        apps: Map<number, WebApp>
-    }
+declare module "express-session" {
+  export interface SessionData {
+    username: string;
+    ip: string;
+    loggedInAt: number;
+  }
 }
 
 // Globals
 export const sessionParser = session(SESSION_OPTIONS);
+export const sessionApps = new Map<string, Map<number, WebApp>>();
 
 // Functions
 export function isLoggedIn(req: Request): boolean {
-    return !!req.session.username;
+  return !!req.session.username;
 }
 
 export function logIn(req: Request, username: string): void {
-    req.session.username = username;
-    req.session.loggedInAt = Date.now();
-    req.session.ip = req.ip;
-    req.session.apps = new Map();
+  req.session.username = username;
+  req.session.loggedInAt = Date.now();
+  req.session.ip = req.ip;
+
+  sessionApps.set(req.sessionID, new Map());
 }
 
 export function logOut(req: Request, res: Response): void {
-    if (!isLoggedIn(req)) {
-        throw new Unauthorized();
+  if (!isLoggedIn(req)) {
+    throw new Unauthorized();
+  }
+  // eslint-disable-next-line
+  const apps = sessionApps.get(req.sessionID)!;
+  apps.forEach((app) => app.close());
+
+  req.session.destroy((err: Error) => {
+    if (err) {
+      console.error("Unimplemented");
     }
-    // eslint-disable-next-line
-    req.session.apps!.forEach(app => app.close());
-    req.session.destroy((err: Error) => {
-        if (err) {
-            console.error('Unimplemented');
-        }
-        res.clearCookie(SESSION_NAME);
-    });
+    res.status(200);
+    res.clearCookie(SESSION_NAME);
+  });
 }
 
-export function getSessionApp(req: Request, app_id: number): WebApp {
-    if (!isLoggedIn(req)) {
-        throw new Unauthorized();
-    }
+export function getSessionApp(req: Request, appId: number): WebApp {
+  if (!isLoggedIn(req)) {
+    throw new Unauthorized();
+  }
 
-    // eslint-disable-next-line
-    const app = req.session.apps!.get(app_id);
-    if(!app) {
-        throw new BadRequest('App does not exist');
-    }
-    return app;
+  // eslint-disable-next-line
+  const apps = sessionApps.get(req.sessionID)!;
+  const app = apps.get(appId);
+
+  if (!app) {
+    throw new BadRequest("App does not exist");
+  }
+  return app;
 }
 
+export function setSessionApp(req: Request, appId: number, app: WebApp): void {
+  if (!isLoggedIn(req)) {
+    throw new Unauthorized();
+  }
 
-export function setSessionApp(req: Request, app_id: number, app: WebApp): void {
-    if (!isLoggedIn(req)) {
-        throw new Unauthorized();
-    }
-
-    req.session.apps!.set(app_id, app);
+  sessionApps.get(req.sessionID)!.set(appId, app);
 }
 
-export function deleteSessionApp(req: Request, app_id: number): void {
-    if (!isLoggedIn(req)) {
-        throw new Unauthorized();
-    }
+export function deleteSessionApp(req: Request, appId: number): void {
+  if (!isLoggedIn(req)) {
+    throw new Unauthorized();
+  }
 
-    // eslint-disable-next-line
-    const app = req.session.apps!.get(app_id);
-    if (app) {
-        app.close();
-        req.session.apps!.delete(app_id);
-    } else {
-        throw new BadRequest('App does not exist');
-    }
+  // eslint-disable-next-line
+  const app = sessionApps.get(req.sessionID)!.get(appId);
+  if (app) {
+    app.close();
+    sessionApps.get(req.sessionID)!.delete(appId);
+  } else {
+    throw new BadRequest("App does not exist");
+  }
 }

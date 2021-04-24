@@ -1,20 +1,22 @@
-import type {Request, Response, NextFunction} from 'express';
-import { IN_PROD } from './config';
+import type { Request, Response, NextFunction } from "express";
+import { IN_PROD } from "./config";
 
 function devLogger(req: Request, _res: Response, next: NextFunction) {
-    const sess = req.sessionID || 'LoggedOut';
-    console.log(`[${sess}]: ${req.url} ${req.method} ${req.body != {} ? req.body : ''}`);
-    next();
+  const sess = req.sessionID || "LoggedOut";
+  console.log(
+    `[${sess}]: ${req.url} ${req.method} ${req.body ? req.body : ""}`
+  );
+  next();
 }
 
 function prodLogger(_req: Request, _res: Response, _next: NextFunction) {
-    throw new Error('Not Implemented Yet!');
+  throw new Error("Not Implemented Yet!");
 }
 
-export let logger: (req: Request, res: Response, next: NextFunction) => void ;
+export let logger: (req: Request, res: Response, next: NextFunction) => void;
 
 if (IN_PROD) {
-    logger = prodLogger;
+  logger = prodLogger;
 } else {
-    logger = devLogger;
+  logger = devLogger;
 }

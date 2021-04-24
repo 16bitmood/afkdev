@@ -1,17 +1,17 @@
-import { WebTerm } from './webterm';
-import { BadRequest } from '../errors';
+import { WebTerm } from "./webterm";
+import { BadRequest } from "../errors";
 
 export type WebApp = any;
 
-export function makeApp(appName:string): WebApp {
-    switch (appName) {
-        case 'term':
-            return new WebTerm('/bin/bash', [], {cols: 90, rows: 90});
+export function makeApp(appName: string): WebApp {
+  switch (appName) {
+    case "term":
+      return new WebTerm("/bin/bash", [], { cols: 90, rows: 90 });
 
-        case 'fileManager':
-            throw new BadRequest(`program ${appName} not implemented`);
+    case "fileManager":
+      throw new BadRequest(`program ${appName} not implemented`);
 
-        default:
-            throw new BadRequest(`program ${appName} not found`);
-    }
+    default:
+      throw new BadRequest(`program ${appName} not found`);
+  }
 }
