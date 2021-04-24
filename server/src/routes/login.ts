@@ -24,13 +24,13 @@ router.post('/login', (req,res) => {
     } else {
         throw new BadRequest('Incorrect username or password!');
     }
-    res.status(200);
+    res.sendStatus(200);
 });
 
 router.post('/logout', (req,res) => {
     if (isLoggedIn(req)) {
         logOut(req, res);
-        res.status(200);
+        res.sendStatus(200);
     } else {
         throw new BadRequest('Not Logged In!');
     }
