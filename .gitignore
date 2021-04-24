@@ -16,3 +16,4 @@ yarn.lock
 
 client/node_modules/
 server/node_modules/
+.env.d/
