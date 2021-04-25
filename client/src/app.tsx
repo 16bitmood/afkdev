@@ -5,9 +5,11 @@ import { logIn, logOut, isLoggedIn as isAuthenticated } from "./api";
 const LoadingScreen = () => <>Loading</>;
 
 const Home = (props: { onLogout: () => void }) => {
-    const handleClick: React.MouseEventHandler = (ev) => {
-        props.onLogout();
-        logOut(); // A bit Wonky
+    const handleClick: React.MouseEventHandler = async (ev) => {
+        ev.preventDefault();
+        if (await logOut()) {
+          props.onLogout();
+        }
     };
 
     return (
@@ -51,7 +53,7 @@ const LoginForm = (props: { onLogin: () => void }) => {
           <button type="submit"> Submit </button>
         </div>
       </form>
-      {incorrectAttempt ? "Incorrect Credentials!" : ""}
+      {incorrectAttempt ? <>Incorrect Credentials!</> : <></>}
     </>
   );
 };

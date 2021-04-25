@@ -16,14 +16,22 @@ export async function logIn(
   username: string,
   password: string
 ): Promise<boolean> {
-  const res = await axios.post("/api/login", { username, password });
+  try {
+    const res = await axios.post("/api/login", { username, password });
+    return res.status === 200;
+  } catch (e) {
+    return false;
+  }
 
-  return res.status === 200;
 }
 
 export async function logOut(): Promise<boolean> {
-  const res = await axios.post("/api/logout");
-  return res.status === 200;
+  try {
+    const res = await axios.post("/api/logout");
+    return res.status === 200;
+  } catch (e) {
+    return false;
+  }
 }
 
 export async function isLoggedIn(): Promise<boolean> {
