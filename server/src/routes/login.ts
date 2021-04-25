@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { TEMP_PASSWORD, TEMP_USERNAME } from "../config";
 import { isLoggedIn, logIn, logOut } from "../session";
-import { BadRequest } from "../errors";
+import { BadRequest, Unauthorized } from "../errors";
 
 const router = Router();
 
@@ -25,7 +25,8 @@ router.post("/login", (req, res) => {
 
 router.post("/logout", (req, res) => {
   if (isLoggedIn(req)) {
-    logOut(req, res);
+      logOut(req, res);
+      return res.sendStatus(200);
   } else {
     throw new BadRequest("Not Logged In!");
   }

@@ -6,7 +6,6 @@ import type { WebApp } from "./webapps";
 // Internal Imports
 import { SESSION_OPTIONS, SESSION_NAME } from "./config";
 import { Unauthorized, BadRequest } from "./errors";
-import { STATUS_CODES } from "node:http";
 
 // Declarations
 declare module "express-session" {
@@ -41,13 +40,12 @@ export function logOut(req: Request, res: Response): void {
   // eslint-disable-next-line
   const apps = sessionApps.get(req.sessionID)!;
   apps.forEach((app) => app.close());
+  sessionApps.delete(req.sessionID);
 
   req.session.destroy((err: Error) => {
     if (err) {
       console.error("Unimplemented");
     }
-    res.status(200);
-    res.clearCookie(SESSION_NAME);
   });
 }
 

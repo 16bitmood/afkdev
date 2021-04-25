@@ -15,8 +15,8 @@ const app = express();
 
 // Basic
 app.use(express.json());
-app.use(logger);
 app.use(sessionParser);
+app.use(logger);
 
 // Serve Frontend
 app.use(express.static(CLIENT_BUILD_PATH));
@@ -31,6 +31,5 @@ const server = http.createServer(app);
 handleWS(server);
 
 // Start
-server.listen(APP_PORT, () => console.log(`server at ${APP_ORIGIN} started`));
-
-// Server
+server.listen(APP_PORT, 
+    () => console.log(`server at ${APP_ORIGIN} started`));
