@@ -22,7 +22,6 @@ export async function logIn(
   } catch (e) {
     return false;
   }
-
 }
 
 export async function logOut(): Promise<boolean> {
@@ -40,7 +39,7 @@ export async function isLoggedIn(): Promise<boolean> {
 }
 
 export async function createApp(appName: string): Promise<number> {
-  const res = await axios.post(`/api/manage/create/${appName}`);
+  const res = await axios.get(`/api/manage/create/${appName}`);
   if (res.status === 200) {
     return res.data.appId;
   } else if (res.status === 401) {
@@ -49,3 +48,9 @@ export async function createApp(appName: string): Promise<number> {
     throw new BadRequest();
   }
 }
+
+export const connectWS = (appId: number) => {
+  // TODO: change localhost to var
+  const wsUrl = `ws://localhost:3000/_connect?appId=${appId}`;
+  return new WebSocket(wsUrl);
+};
