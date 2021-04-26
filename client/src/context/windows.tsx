@@ -12,7 +12,7 @@ export interface WinsContextType {
   focused: number | null;
   maxId: number;
   focus: (id: number) => void;
-  create: (appName: string) => void;
+  create: (name: string) => void;
   close: (id: number) => void;
 }
 
@@ -44,14 +44,7 @@ export const WinsContextProvider: FC = ({ children }) => {
     focus: (id) => setFocused(id),
     create: (name: string) => {
       const winId = genId();
-      const App = createWebApp({
-        name,
-        size: {},
-        onExit: () => {},
-        appOptions: {},
-        onTitleChange: (t) => {},
-      });
-      const NewWin = <Win id={winId} WebApp={App} />;
+      const NewWin = <Win id={winId} appName={name}/>;
       wins.set(winId, NewWin);
       setWins(new Map(wins));
     },

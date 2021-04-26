@@ -14,10 +14,11 @@ export interface WebAppProps {
 const Dummy: FC<WebAppProps> = (props) => {
   const { name, onExit, onTitleChange, appOptions } = props;
 
-  const [title, setTitle] = useState("dummy title");
+  const [input, setInput] = useState("dummy title");
 
   const handleSubmit: FormEventHandler = (ev) => {
-    onTitleChange(title);
+    ev.preventDefault();
+    onTitleChange(input);
   };
 
   return (
@@ -25,7 +26,7 @@ const Dummy: FC<WebAppProps> = (props) => {
       <form onSubmit={handleSubmit}>
         <label>
           <h1> Change Title </h1>
-          <input type="text" onChange={(ev) => setTitle(ev.target.value)}/>
+          <input type="text" onChange={(ev) => setInput(ev.target.value)}/>
         </label>
         <button type="submit">Apply Changes</button>
       </form>
@@ -35,8 +36,7 @@ const Dummy: FC<WebAppProps> = (props) => {
 };
 
 export const createWebApp = (options: WebAppProps): JSX.Element => {
-  const { name, onExit, onTitleChange, appOptions } = options;
-  switch (name) {
+  switch (options.name) {
     case "term":
       return <WebTerm {...options} />;
     case "dummy":

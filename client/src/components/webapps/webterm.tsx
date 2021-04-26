@@ -10,8 +10,8 @@ import { isWebGL2Available } from "../../utils";
 
 import { WebAppProps } from "./index";
 
-// fix
 import "xterm/css/xterm.css";
+import "../../styles/webapps/webterm.scss";
 
 enum CMD {
   CLIENT_DATA = "0",
@@ -38,8 +38,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     const term = termRef.current;
     term.loadAddon(fit);
     term.loadAddon(webLinks);
-    term.onTitleChange(() =>
-      props.onTitleChange ? props.onTitleChange : () => {}
+    term.onTitleChange((title) => props.onTitleChange(title)
     );
     term.onData(onTermData);
     term.onResize(onTermResize);
@@ -132,5 +131,5 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     termAddonsRef.current.fit.fit();
   }, [props.size]);
 
-  return <div ref={termContainerRef} />;
+  return <div style={{height:'100%',width:'100%'}} ref={termContainerRef} />;
 };

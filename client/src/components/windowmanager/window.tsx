@@ -1,11 +1,12 @@
-import { FC, useState, useContext } from "react";
+import { FC, useState, useContext, useRef } from "react";
 import { WinsContext } from "../../context/windows";
 
 import { Rnd } from 'react-rnd';
+import { createWebApp } from "../webapps";
 
 interface WinProps {
-  WebApp: JSX.Element;
-  id: number;
+  appName: string,
+  id: number,
 }
 
 interface TitleBarProps {
@@ -31,15 +32,24 @@ const TitleBar: FC<TitleBarProps> = ({
   );
 };
 
-export const Win: FC<WinProps> = ({ WebApp, id}) => {
+export const Win: FC<WinProps> = ({appName, id}) => {
   const { close } = useContext(WinsContext);
   const onExit = () => close(id);
 
-  const [title] = useState(" title ");
+  const [title, setTitle] = useState(" title ");
   const [maximized, setMaximized] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const [pos, setPos] = useState({x: 0, y: 0});
   const [size, setSize] = useState({height: 300, width: 300});
+
+  const app = (
+    createWebApp({
+      name: appName,
+      appOptions: {},
+      size,
+      onExit,
+      onTitleChange : (title) => {setTitle(title)}
+  }));
 
   return (
     <Rnd 
@@ -48,9 +58,7 @@ export const Win: FC<WinProps> = ({ WebApp, id}) => {
         setSize({
           width: ref.offsetWidth,
           height: ref.offsetHeight,
-          ...position,
         });
-        //  this.termRef.current.fitAddon.fit()
     }}
     >
       <TitleBar
@@ -59,7 +67,7 @@ export const Win: FC<WinProps> = ({ WebApp, id}) => {
         onMaximize={() => setMaximized(!maximized)}
         onClose={onExit}
       />
-      {WebApp}
+      {app}
     </Rnd>
   );
 };
