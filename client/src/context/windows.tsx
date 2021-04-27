@@ -1,59 +1,61 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { createContext, useState } from "react";
 
 import { createWebApp } from "../components/webapps";
 import { Win } from "../components/windowmanager";
 
-// type Win = any; // TODO
-// type WinId = number;
-
 export interface WinsContextType {
   wins: Map<number, JSX.Element>;
   focused: number | null;
-  maxId: number;
   focus: (id: number) => void;
   create: (name: string) => void;
-  close: (id: number) => void;
 }
 
 export const initialWindowsContext: WinsContextType = {
   wins: new Map(),
   focused: null,
-  maxId: 0,
   focus: () => {},
   create: () => {},
-  close: () => {},
+};
+
+let _maxId = 0;
+const genId = () => {
+  _maxId += 1;
+  return _maxId;
 };
 
 export const WinsContext = createContext(initialWindowsContext);
 
 export const WinsContextProvider: FC = ({ children }) => {
   const [wins, setWins] = useState(new Map() as Map<number, JSX.Element>);
-  const [maxId, setMaxId] = useState(0);
   const [focused, setFocused] = useState<null | number>(null);
 
-  const genId = () => {
-    setMaxId(maxId + 1);
-    return maxId - 1;
+  const closeWin = (id: number) => {
+    setFocused((prevFocused) => (prevFocused === id ? null : prevFocused));
+    setWins((prevWins) => {
+      prevWins.delete(id);
+      return new Map(prevWins);
+    });
   };
 
+  useEffect(() => {
+    console.log(wins);
+  }, [wins]);
+
   const ctxValue: WinsContextType = {
-    wins: wins,
-    focused: null,
-    maxId: maxId,
+    wins,
+    focused,
     focus: (id) => setFocused(id),
     create: (name: string) => {
-      const winId = genId();
-      const NewWin = <Win id={winId} appName={name}/>;
-      wins.set(winId, NewWin);
-      setWins(new Map(wins));
-    },
-    close: (id) => {
-      if (focused === id) {
-        setFocused(null);
-      }
-      wins.delete(id);
-      setWins(new Map(wins));
+      setWins((prevWins) => {
+        const winId = genId();
+        const NewWin = (
+          <Win key={winId} appName={name} onExit={() => closeWin(winId)} />
+        );
+        prevWins.set(winId, NewWin);
+        console.log("created: ", winId);
+        return new Map(prevWins);
+      });
     },
   };
 

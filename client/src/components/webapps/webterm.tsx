@@ -38,8 +38,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     const term = termRef.current;
     term.loadAddon(fit);
     term.loadAddon(webLinks);
-    term.onTitleChange((title) => props.onTitleChange(title)
-    );
+    term.onTitleChange((title) => props.onTitleChange(title));
     term.onData(onTermData);
     term.onResize(onTermResize);
 
@@ -86,7 +85,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     } else if (socket.readyState === WebSocket.OPEN) {
       socket.send(CMD.CLIENT_DATA + data);
     }
-  }
+  };
 
   const onSocketOpen = async () => {
     await onTermResize(termAddonsRef.current.fit.proposeDimensions());
@@ -131,5 +130,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     termAddonsRef.current.fit.fit();
   }, [props.size]);
 
-  return <div style={{height:'100%',width:'100%'}} ref={termContainerRef} />;
+  return (
+    <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />
+  );
 };
