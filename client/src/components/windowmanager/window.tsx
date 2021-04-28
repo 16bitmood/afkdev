@@ -1,61 +1,77 @@
-import { FC, useState, useContext, useRef } from "react";
-import { WinsContext } from "../../context/windows";
+import { FC, useContext } from "react";
+
+import { WinsContext  } from '../../context/windows'
 
 import { Rnd } from "react-rnd";
-import { createWebApp } from "../webapps";
+
+export type Size = {
+  height: number,
+  width: number
+}
+
+export type Position = {
+  x: number,
+  y: number
+}
 
 interface WinProps {
-  appName: string;
-  key: number;
-  onExit: () => void;
+  winId: number
+}
+
+export interface WinState {
+  id: number,
+  app: JSX.Element,
+  title: string,
+  maximized: boolean,
+  minimized: boolean,
+  position: Position,
+  size: Size,
 }
 
 interface TitleBarProps {
   title: string;
   onMinimize: () => void;
   onMaximize: () => void;
-  onClose: () => void;
+  onExit: () => void;
 }
 
 const TitleBar: FC<TitleBarProps> = ({
   title,
   onMinimize,
   onMaximize,
-  onClose,
+  onExit,
 }) => {
   return (
     <>
       {title}
       <button onClick={onMinimize}> minimize </button>
       <button onClick={onMaximize}> maximize </button>
-      <button onClick={onClose}> close </button>
+      <button onClick={onExit}> exit </button>
     </>
   );
 };
 
-export const Win: FC<WinProps> = ({ appName, key, onExit }) => {
-  console.log(key);
-  const [title, setTitle] = useState(` WindowId: ${key} `);
-  const [maximized, setMaximized] = useState(false);
-  const [minimized, setMinimized] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState({ height: 300, width: 600 });
-
-  const app = createWebApp({
-    name: appName,
-    appOptions: {},
+export const Win: FC<WinProps> = ({winId}) => {
+  const { 
+    app,
+    minimized,
+    maximized,
+    position,
+    title,
     size,
-    onExit,
-    onTitleChange: (title: string) => {
-      setTitle(title);
-    },
-  });
+    toggleMinimize, 
+    toggleMaximize, 
+    setSize, 
+    setPosition, 
+    setTitle, 
+    onExit 
+  } = useWindow(winId);
 
   return (
     <Rnd
       style={{ display: minimized ? "none" : "" }}
-      position={pos}
-      onDrag={(e, data) => setPos({ x: data.x, y: data.y })}
+      position={position}
+      onDrag={(e, data) => setPosition({ x: data.x, y: data.y })}
       size={size}
       onResize={(e, direction, ref, delta, position) => {
         setSize({
@@ -66,11 +82,26 @@ export const Win: FC<WinProps> = ({ appName, key, onExit }) => {
     >
       <TitleBar
         title={title}
-        onMinimize={() => setMinimized(!minimized)}
-        onMaximize={() => setMaximized(!maximized)}
-        onClose={onExit}
+        onMinimize={toggleMinimize}
+        onMaximize={toggleMaximize}
+        onExit={onExit}
       />
       {app}
     </Rnd>
   );
 };
+
+const useWindow = (id: number) => {
+
+  const { wins, kill, toggleMaximize, toggleMinimize, setSize, setPosition, setTitle } = useContext(WinsContext);
+  const winProps = wins.get(id)!;
+  return {
+    ...winProps,
+    onExit: () => kill(id),
+    toggleMaximize: () => toggleMaximize(id),
+    toggleMinimize: () => toggleMinimize(id),
+    setTitle: (title: string) => setTitle(id, title),
+    setSize: (size: Size) => setSize(id, size),
+    setPosition: (position: Position) => setPosition(id, position),
+  }
+}

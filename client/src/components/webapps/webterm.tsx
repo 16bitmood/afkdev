@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useRef } from "react";
+import React, { MutableRefObject, useContext, useEffect, useRef } from "react";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import { WebLinksAddon } from "xterm-addon-web-links";
@@ -12,6 +12,7 @@ import { WebAppProps } from "./index";
 
 import "xterm/css/xterm.css";
 import "../../styles/webapps/webterm.scss";
+import { WinsContext } from "../../context/windows";
 
 enum CMD {
   CLIENT_DATA = "0",
@@ -20,6 +21,8 @@ enum CMD {
 }
 
 export const WebTerm: React.FC<WebAppProps> = (props) => {
+  const { wins } = useContext(WinsContext);
+
   // Refs will remain the same on re-renders
   const termAddonsRef = useRef({
     fit: new FitAddon(),
@@ -38,7 +41,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     const term = termRef.current;
     term.loadAddon(fit);
     term.loadAddon(webLinks);
-    term.onTitleChange((title) => props.onTitleChange(title));
+    term.onTitleChange((title) => console.log('term title changed')); // TODO
     term.onData(onTermData);
     term.onResize(onTermResize);
 
@@ -107,7 +110,8 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     if (wsRef.current) {
       wsRef.current.close();
       termRef.current.dispose();
-      props.onExit();
+      console.log('term exit'); // TODO:
+      // props.onExit();
     }
   };
 
@@ -126,9 +130,10 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     return onExit;
   }, []);
 
+  TODO:
   useEffect(() => {
     termAddonsRef.current.fit.fit();
-  }, [props.size]);
+  }, [wins]); // is this okay?
 
   return (
     <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />

@@ -1,15 +1,18 @@
 import { useContext } from "react";
 import { WinsContext } from "../../context/windows";
+import { Taskbar } from './taskbar';
+
+import { Win } from './window';
 
 export const WindowManager = () => {
-  const { wins, create } = useContext(WinsContext);
-  console.log("wins:", wins);
+  const { wins , spawn } = useContext(WinsContext);
+  
   return (
     <>
-      {wins.keys()}
-      {wins.values()}
-      <button onClick={() => create("dummy")}>create dummy</button>
-      <button onClick={() => create("term")}>create term</button>
+      <Taskbar />
+      {[...wins.keys()].map((k) => <Win key={k} winId={k} />)}
+      <button onClick={() => spawn("dummy")}>create dummy</button>
+      <button onClick={() => spawn("term")}>create term</button>
     </>
   );
 };
