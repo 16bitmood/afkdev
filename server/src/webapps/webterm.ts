@@ -50,11 +50,15 @@ export class WebTerm {
     this.term.resize(cols, rows);
   }
 
+  close() {
+    this.term.kill();
+  }
+
   connect(ws: WebSocket): void {
     ws.send(WTData.SERVER_DATA + this.initialData);
 
     this.term.onData((data) => {
-      buffer(ws, 5)("0" + data);
+      buffer(ws, 5)(WTData.SERVER_DATA + data);
     });
 
     this.term.onExit((ev) => {
@@ -90,7 +94,10 @@ export class WebTerm {
       case "resize": {
         const { cols, rows } = command;
         if (!cols || !rows) {
-          throw new BadRequest("Invalid Command");
+          console.log('error: ', cols, rows)
+          return { result: "Ok"};
+          // temp
+          // throw new BadRequest("Invalid Command");
         }
         this.resize(cols, rows);
         return { result: "Ok" };
