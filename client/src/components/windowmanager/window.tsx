@@ -1,77 +1,61 @@
 import { FC, useContext } from "react";
 
-import { WinsContext  } from '../../context/windows'
+import { WinsContext } from "../../context/windows";
 
 import { Rnd } from "react-rnd";
+import { TitleBar } from "./titlebar";
 
 export type Size = {
-  height: number,
-  width: number
-}
+  height: number;
+  width: number;
+};
 
 export type Position = {
-  x: number,
-  y: number
-}
+  x: number;
+  y: number;
+};
 
 interface WinProps {
-  winId: number
+  winId: number;
 }
 
 export interface WinState {
-  id: number,
-  app: JSX.Element,
-  title: string,
-  maximized: boolean,
-  minimized: boolean,
-  position: Position,
-  size: Size,
-}
-
-interface TitleBarProps {
+  id: number;
+  appType: string;
+  appIconPath: string;
+  zIndex: number;
+  app: JSX.Element;
   title: string;
-  onMinimize: () => void;
-  onMaximize: () => void;
-  onExit: () => void;
+  maximized: boolean;
+  minimized: boolean;
+  position: Position;
+  size: Size;
 }
 
-const TitleBar: FC<TitleBarProps> = ({
-  title,
-  onMinimize,
-  onMaximize,
-  onExit,
-}) => {
-  return (
-    <>
-      {title}
-      <button onClick={onMinimize}> minimize </button>
-      <button onClick={onMaximize}> maximize </button>
-      <button onClick={onExit}> exit </button>
-    </>
-  );
-};
-
-export const Win: FC<WinProps> = ({winId}) => {
-  const { 
+export const Win: FC<WinProps> = ({ winId }) => {
+  const {
     app,
     minimized,
     maximized,
     position,
     title,
     size,
-    toggleMinimize, 
-    toggleMaximize, 
-    setSize, 
-    setPosition, 
-    setTitle, 
-    onExit 
+    zIndex,
+    toggleMinimize,
+    toggleMaximize,
+    setSize,
+    onFocus,
+    setPosition,
+    setTitle,
+    onExit,
   } = useWindow(winId);
 
   return (
     <Rnd
-      style={{ display: minimized ? "none" : "" }}
+      style={{ display: minimized ? "none" : "", zIndex: zIndex }}
       position={position}
       onDrag={(e, data) => setPosition({ x: data.x, y: data.y })}
+      onDragStart={onFocus}
       size={size}
       onResize={(e, direction, ref, delta, position) => {
         setSize({
@@ -92,16 +76,25 @@ export const Win: FC<WinProps> = ({winId}) => {
 };
 
 const useWindow = (id: number) => {
-
-  const { wins, kill, toggleMaximize, toggleMinimize, setSize, setPosition, setTitle } = useContext(WinsContext);
+  const {
+    wins,
+    kill,
+    focus,
+    toggleMaximize,
+    toggleMinimize,
+    setSize,
+    setPosition,
+    setTitle,
+  } = useContext(WinsContext);
   const winProps = wins.get(id)!;
   return {
     ...winProps,
+    onFocus: () => focus(id),
     onExit: () => kill(id),
     toggleMaximize: () => toggleMaximize(id),
     toggleMinimize: () => toggleMinimize(id),
     setTitle: (title: string) => setTitle(id, title),
     setSize: (size: Size) => setSize(id, size),
     setPosition: (position: Position) => setPosition(id, position),
-  }
-}
+  };
+};

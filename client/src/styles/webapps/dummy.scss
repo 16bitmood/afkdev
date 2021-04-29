@@ -1,0 +1,11 @@
+@import 'mixins';
+
+.dummy {
+    font-family: 'Inconsolata';
+    color: black;
+    background-color: white;
+}
+
+.button {
+    @include minimal-button(black, white, 30%, 100px)
+}

@@ -21,7 +21,7 @@ enum CMD {
 }
 
 export const WebTerm: React.FC<WebAppProps> = (props) => {
-  const { wins } = useContext(WinsContext);
+  const { wins, kill } = useContext(WinsContext);
 
   // Refs will remain the same on re-renders
   const termAddonsRef = useRef({
@@ -41,7 +41,7 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     const term = termRef.current;
     term.loadAddon(fit);
     term.loadAddon(webLinks);
-    term.onTitleChange((title) => console.log('term title changed')); // TODO
+    term.onTitleChange((title) => console.log("term title changed")); // TODO
     term.onData(onTermData);
     term.onResize(onTermResize);
 
@@ -110,8 +110,8 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     if (wsRef.current) {
       wsRef.current.close();
       termRef.current.dispose();
-      console.log('term exit'); // TODO:
-      // props.onExit();
+      console.log("term exit"); // TODO:
+      kill(props.id);
     }
   };
 
@@ -130,12 +130,11 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     return onExit;
   }, []);
 
-  TODO:
   useEffect(() => {
     termAddonsRef.current.fit.fit();
-  }, [wins]); // is this okay?
+  }, [wins]); // TODO: is this okay?
 
   return (
-    <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />
+    <div style={{ height: "100%", width: "100%"}} ref={termContainerRef} />
   );
 };

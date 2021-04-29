@@ -1,10 +1,16 @@
+import {FC} from 'react';
 import { WinsContextProvider } from "./context/windows";
 import { WindowManager } from "./components/windowmanager";
+import { logOut } from "./api";
+import { Metadata } from "./metadata";
 
-export const Home = () => {
+export const Home:FC<{}> = () => {
   return (
-    <WinsContextProvider>
-      <WindowManager />
-    </WinsContextProvider>
+    <>
+      <Metadata />
+      <WinsContextProvider>
+        <WindowManager />
+      </WinsContextProvider>
+    </>
   );
 };

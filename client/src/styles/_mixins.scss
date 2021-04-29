@@ -1,0 +1,29 @@
+
+@mixin minimal-button($bg, $fg, $lighten-amount, $width) {
+  font-family: inherit;
+  font-size: inherit;
+  overflow-x: hidden;
+  width: $width;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  background: $bg;
+  color: $fg;
+  cursor: pointer;
+  text-align: center;
+  transition: background 125ms ease-in-out, transform 75ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:hover {
+    background: lighten($bg, $lighten-amount);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }    
+}

@@ -1,3 +1,4 @@
+import { mdiTrayRemove } from "@mdi/js";
 import axios from "axios";
 
 export class Unauthorized extends Error {

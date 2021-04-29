@@ -1,5 +1,8 @@
 // Resize Fix
 .xterm {
+  scrollbar-color: white black;
   height: 100%;
   width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
