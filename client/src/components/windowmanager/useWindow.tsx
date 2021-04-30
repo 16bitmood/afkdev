@@ -1,7 +1,7 @@
-import type { Size, Position } from './window';
+import type { Size, Position } from "./window";
 
-import { useContext } from 'react';
-import { WinsContext } from '../../context/windows';
+import { useContext } from "react";
+import { WinsContext } from "../../context/windows";
 
 export const useWindow = (id: number) => {
   const {

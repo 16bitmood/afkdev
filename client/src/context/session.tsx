@@ -29,7 +29,9 @@ export const SessionContextProvider: FC = ({ children }) => {
     },
     sessionLogin: async (username: string, password: string) => {
       const r = await logIn(username, password);
-      if (r) { setIsLoggedIn(true) }
+      if (r) {
+        setIsLoggedIn(true);
+      }
       return r;
     },
   };

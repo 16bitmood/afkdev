@@ -1,15 +1,13 @@
 @use 'colors';
+@use 'fonts';
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
-@import url(https://fonts.googleapis.com/css?family=Material+Icons);
-@import url(https://fonts.googleapis.com/css?family=Inconsolata);
-
 html {
   overflow: hidden;
   min-height: 100%;
   min-width: 100%;
+
   body {
-    font-family: "Inconsolata";
+    font-family: "Inconsolata", monospace;
     font-size: 16px;
     color: colors.$FG;
     background: colors.$BG;
@@ -19,8 +17,6 @@ html {
 
 #root {
   position: fixed;
-  top: 0px;
-  left: 0px;
   height: 100%;
   width: 100%;
 }

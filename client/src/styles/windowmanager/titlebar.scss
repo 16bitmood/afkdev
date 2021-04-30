@@ -1,17 +1,17 @@
 @import "mixins";
 @import "variables";
 
-
 .titlebar {
+  font-family: inherit;
   opacity: 0.8;
   background-color: $TITLEBAR-BG;
   color: white;
   height: $TITLEBAR-HEIGHT;
   font-size: 18px;
-  font-family: "Inconsolata";
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   &-left {
     font: inherit;
     font-size: inherit;
@@ -34,10 +34,13 @@
     margin: 0;
     justify-content: flex-end;
     align-items: center;
+
     &-button {
       @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, 30%, 50px);
+
       &-close {
         @include minimal-button(red, white, 30%, 50px);
+
         &:hover {
           background-color: darken(red, 20%);
         }

@@ -1,4 +1,4 @@
-import '../styles/windowmanager/taskbar.scss';
+import "../styles/windowmanager/taskbar.scss";
 
 import { FC, useEffect, useState } from "react";
 import { getStats } from "../api";

@@ -4,13 +4,15 @@ import { FC } from "react";
 import { Rnd } from "react-rnd";
 
 import { TitleBar } from "./titlebar";
-import { useWindow } from './useWindow';
+import { useWindow } from "./useWindow";
 
-export type Size = { height: number, width: number };
+export type Size = { height: number; width: number };
 
-export type Position = { x: number,  y: number};
+export type Position = { x: number; y: number };
 
-interface WinProps { id: number };
+interface WinProps {
+  id: number;
+}
 
 export interface WinState {
   id: number;
@@ -58,23 +60,25 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
       }}
       onDrag={(e, data) => setPosition({ x: data.x, y: data.y })}
       onDragStart={onFocus}
-      size={maximized? {height: '100%', width: '100%'} : size}
-      position={maximized? { x: 0, y: 40} : position}
+      size={maximized ? { height: "100%", width: "100%" } : size}
+      position={maximized ? { x: 0, y: 40 } : position}
       minHeight={200}
       minWidth={300}
       className={className}
       disableDragging={maximized}
       enableResizing={!maximized}
       onResize={(_e, _direction, ref, _delta, _position) => {
-        setSize({ width: ref.offsetWidth, height: ref.offsetHeight});
-      }}>
+        setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
+      }}
+    >
       <TitleBar
         appIconPath={appIconPath}
         appType={appType}
         title={title}
         onMinimize={toggleMinimize}
         onMaximize={toggleMaximize}
-        onExit={onExit}/>
+        onExit={onExit}
+      />
       {app}
     </Rnd>
   );

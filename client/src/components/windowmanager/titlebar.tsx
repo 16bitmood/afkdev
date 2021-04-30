@@ -23,9 +23,13 @@ export const TitleBar: FC<TitleBarProps> = ({
 }) => {
   return (
     <div className="titlebar">
-      <div className='titlebar-left'>
-        <Icon size="16px" path={appIconPath} style={{verticalAlign: 'middle'}} />
-        <span style={{padding: 10}}>{appType}</span>
+      <div className="titlebar-left">
+        <Icon
+          size="16px"
+          path={appIconPath}
+          style={{ verticalAlign: "middle" }}
+        />
+        <span style={{ padding: 10 }}>{appType}</span>
       </div>
       <div className="titlebar-center">{title}</div>
       <div className="titlebar-right">

@@ -24,7 +24,7 @@ export const logIn = async (
   } catch (e) {
     return false;
   }
-}
+};
 
 export const logOut = async (): Promise<boolean> => {
   try {
@@ -33,7 +33,7 @@ export const logOut = async (): Promise<boolean> => {
   } catch (e) {
     return false;
   }
-}
+};
 
 export const isLoggedIn = async (): Promise<boolean> => {
   try {
@@ -42,23 +42,23 @@ export const isLoggedIn = async (): Promise<boolean> => {
   } catch (e) {
     return false;
   }
-}
+};
 
-export const createApp = async (appName: string): Promise<number|null> => {
+export const createApp = async (appName: string): Promise<number | null> => {
   try {
     const res = await axios.get(`/api/manage/create/${appName}`);
     return res.data.appId;
-  } catch(e) {
+  } catch (e) {
     return null;
   }
-}
+};
 
 export const getStats = async () => {
   try {
     const res = await axios.get("/api/stats");
     return res.data;
-  } catch(e) {
-    return { ip: '0.0.0.0'}
+  } catch (e) {
+    return { ip: "0.0.0.0" };
   }
 };
 

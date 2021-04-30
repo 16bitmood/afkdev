@@ -21,11 +21,12 @@
     color: inherit;
     display: flex;
     flex-direction: column;
-    left: 0px;
+    left: 0;
     top: 40px;
 
     &-button {
       @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);
+
       font-size: 16px;
       padding: 10px;
     }
@@ -33,11 +34,14 @@
 
   &-menu-button {
     @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 100%, 100px);
+
     &:hover {
       color: $ACCENT-COLOR;
     }
+
     &-opened {
       @include minimal-button(darken($TASKBAR-FG, 10%), $TASKBAR-BG, 0%, 100px);
+
       &:hover {
         color: $ACCENT-COLOR;
       }
@@ -46,6 +50,7 @@
 
   &-app {
     @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 50px);
+
     &:hover {
       color: $ACCENT-COLOR;
     }
@@ -61,6 +66,7 @@
 
   &-element {
     @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 00%, 150px);
+
     &:hover {
       color: $ACCENT-COLOR;
     }

@@ -1,23 +1,55 @@
 @use "colors" as *;
-@import "mixins";
+@use "mixins" as *;
 
 @keyframes shaker {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
 
 .wrapper-login-form {
   padding: 15%;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 0.875em;
   color: $FG;
   background: $BG;
@@ -36,6 +68,7 @@
     text-align: center;
     letter-spacing: 20px;
     transition: all ease-in-out 0.3s;
+
     &:hover {
       color: $BG;
       background-color: $FG;
@@ -48,8 +81,7 @@
 .login-form {
   width: 400px;
   margin: 50px auto 100px auto;
-
-  font-family: 'Inconsolata', 'Material Icons';
+  font-family: "Inconsolata", monospace;
   font-size: 20px;
   letter-spacing: 2px;
 
@@ -71,17 +103,15 @@
     letter-spacing: inherit;
     background: inherit;
     color: inherit;
-
     width: 100%;
     height: 50px;
-    padding: 0px 15px 0px 15px;
-    
+    padding: 0 15px 0 15px;
     outline: none;
-    
     border: solid 1px $C2;
     transition: all 0.3s ease-in-out;
 
-    &[type=text], &[type=password] {
+    &[type="text"],
+    &[type="password"] {
       border-bottom: none;
     }
   }
@@ -102,6 +132,5 @@
   input:focus {
     background: $C2;
     color: $BG;
-  } 
-
+  }
 }

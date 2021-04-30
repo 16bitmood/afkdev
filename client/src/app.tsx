@@ -2,7 +2,7 @@ import "./styles/global.scss";
 
 import { FC, useContext, useEffect } from "react";
 
-import { isLoggedIn as isAuthenticated, logIn } from "./api";
+import { isLoggedIn as isAuthenticated } from "./api";
 import { SessionContext, SessionContextProvider } from "./context/session";
 
 import { Home } from "./home";

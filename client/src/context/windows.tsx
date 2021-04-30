@@ -28,7 +28,7 @@ const getAppIconPath = (name: string): string => {
 export interface WinsContextType {
   wins: Map<number, WinState>; // TODO: Should I just use an object?
   focused: number;
-  spawn: (name: 'term' | 'dummy') => void; // TODO:
+  spawn: (name: "term" | "dummy") => void; // TODO:
   kill: (id: number) => void;
   focus: (id: number) => void;
   toggleMinimize: (id: number) => void;
@@ -39,13 +39,20 @@ export interface WinsContextType {
 }
 
 type WindowsReducerActions = {
-  type: 'spawn' | 'kill' | 'focus' | 'toggleMinimize' | 'toggleMaximize' | 'setSize' | 'setPosition' | 'setTitle',
-  id?: number,
-  name?: 'term' | 'dummy', // TODO: 
-  size?: Size,
-  position?: Position,
-  title?: string
-
+  type:
+    | "spawn"
+    | "kill"
+    | "focus"
+    | "toggleMinimize"
+    | "toggleMaximize"
+    | "setSize"
+    | "setPosition"
+    | "setTitle";
+  id?: number;
+  name?: "term" | "dummy"; // TODO:
+  size?: Size;
+  position?: Position;
+  title?: string;
 };
 
 export const initialWindowsContext: WinsContextType = {
@@ -74,7 +81,7 @@ const windowsReducer = (
   prevState: Map<number, WinState>,
   action: WindowsReducerActions
 ): Map<number, WinState> => {
-  const { id, name, type, size, position, title } = action;
+  const { id, type } = action;
   switch (type) {
     case "spawn": {
       const id = genId(prevState);
@@ -98,7 +105,7 @@ const windowsReducer = (
       // hacky way
       prevState = new Map(
         [...prevState.values()].map((winState) => {
-          if (winState.id != id) {
+          if (winState.id !== id) {
             winState.zIndex = winState.id;
           }
           return [winState.id, winState];
@@ -155,7 +162,6 @@ export const WinsContextProvider: FC = ({ children }) => {
     new Map<number, WinState>()
   );
 
-  // TODO:
   const [focused, setFocused] = useState(-1);
 
   const ctx: WinsContextType = {
