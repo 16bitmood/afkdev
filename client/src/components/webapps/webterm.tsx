@@ -8,7 +8,7 @@ import { createApp, connectWS } from "../../api";
 
 import { isWebGL2Available } from "../../utils";
 
-import { WebAppProps } from "./index";
+import { WebAppOptions } from "./index";
 
 import "xterm/css/xterm.css";
 import "../../styles/webapps/webterm.scss";
@@ -20,7 +20,7 @@ enum CMD {
   SERVER_DATA = "0",
 }
 
-export const WebTerm: React.FC<WebAppProps> = (props) => {
+export const WebTerm: React.FC<WebAppOptions> = (props) => {
   const { wins, kill } = useContext(WinsContext);
 
   // Refs will remain the same on re-renders
@@ -110,14 +110,13 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
     if (wsRef.current) {
       wsRef.current.close();
       termRef.current.dispose();
-      console.log("term exit"); // TODO:
       kill(props.id);
     }
   };
 
   const connectWebTerm = async () => {
     pidRef.current = await createApp("term");
-    wsRef.current = connectWS(pidRef.current);
+    wsRef.current = connectWS(pidRef.current!);
     wsRef.current.onopen = onSocketOpen;
     wsRef.current.onmessage = onSocketMessage;
     wsRef.current.onerror = onExit;
@@ -132,9 +131,9 @@ export const WebTerm: React.FC<WebAppProps> = (props) => {
 
   useEffect(() => {
     termAddonsRef.current.fit.fit();
-  }, [wins]); // TODO: is this okay?
+  }, [wins]); // TODO: is this okay for performance?
 
   return (
-    <div style={{ height: "100%", width: "100%"}} ref={termContainerRef} />
+    <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />
   );
 };

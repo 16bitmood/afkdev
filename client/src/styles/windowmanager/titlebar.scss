@@ -1,42 +1,47 @@
-@import 'mixins';
-
-$TITLEBAR-BG: black;
-$TITLEBAR-FG: white;
+@import "mixins";
+@import "variables";
 
 
 .titlebar {
-    background-color: $TITLEBAR-BG;
-    color: white;
-    height: 25px;
+  opacity: 0.8;
+  background-color: $TITLEBAR-BG;
+  color: white;
+  height: $TITLEBAR-HEIGHT;
+  font-size: 18px;
+  font-family: "Inconsolata";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &-left {
+    font: inherit;
+    font-size: inherit;
+    margin-left: 20px;
+    justify-content: flex-start;
+  }
+
+  &-center {
+    align-self: center;
+    justify-self: stretch;
+    font: inherit;
+    font-size: inherit;
+  }
+
+  &-right {
     display: flex;
-    justify-content: space-between;
+    border: none;
+    padding: none;
+    height: 100%;
+    margin: 0;
+    justify-content: flex-end;
     align-items: center;
-
-    &-left {
-        justify-content: flex-start;
-    }
-
-    &-center {
-        font: 'Inconsolata';
-        font-size: 20px;
-    }
-
-    &-right {
-        display: flex;
-        border: none;
-        padding: none;
-        height: 100%;
-        margin: 0;
-        justify-content: flex-end;
-        align-items: center;
-        &-button {
-            @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, 30%, 50px);
-            &-close {
-                @include minimal-button(red, white, 30%, 50px);
-                &:hover {
-                    background-color: darken(red, 20%);
-                }
-            }
+    &-button {
+      @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, 30%, 50px);
+      &-close {
+        @include minimal-button(red, white, 30%, 50px);
+        &:hover {
+          background-color: darken(red, 20%);
         }
+      }
     }
+  }
 }

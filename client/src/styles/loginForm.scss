@@ -1,0 +1,107 @@
+@use "colors" as *;
+@import "mixins";
+
+@keyframes shaker {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.wrapper-login-form {
+  padding: 15%;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  color: $FG;
+  background: $BG;
+
+  header {
+    margin-left: auto;
+    box-sizing: border-box;
+    margin-right: auto;
+    width: 400px;
+    height: 100px;
+    line-height: 100px;
+    border: 2px solid $C8;
+    outline: 2px solid $C8;
+    outline-offset: -10px;
+    font-size: 2.3em;
+    text-align: center;
+    letter-spacing: 20px;
+    transition: all ease-in-out 0.3s;
+    &:hover {
+      color: $BG;
+      background-color: $FG;
+      border-color: $FG;
+      outline-color: $FG;
+    }
+  }
+}
+
+.login-form {
+  width: 400px;
+  margin: 50px auto 100px auto;
+
+  font-family: 'Inconsolata', 'Material Icons';
+  font-size: 20px;
+  letter-spacing: 2px;
+
+  .alert {
+    animation: shaker 0.3s;
+    margin: 50px auto auto auto;
+    font-size: 24px;
+    // font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+    width: 100%;
+    color: $C5;
+  }
+
+  input {
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    background: inherit;
+    color: inherit;
+
+    width: 100%;
+    height: 50px;
+    padding: 0px 15px 0px 15px;
+    
+    outline: none;
+    
+    border: solid 1px $C2;
+    transition: all 0.3s ease-in-out;
+
+    &[type=text], &[type=password] {
+      border-bottom: none;
+    }
+  }
+
+  input:hover {
+    background: $C2;
+    color: $BG;
+  }
+
+  input::placeholder {
+    color: $C8;
+  }
+
+  input:hover::placeholder {
+    color: $BG;
+  }
+
+  input:focus {
+    background: $C2;
+    color: $BG;
+  } 
+
+}

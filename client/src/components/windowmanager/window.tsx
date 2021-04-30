@@ -1,23 +1,16 @@
-import { FC, useContext } from "react";
+import "../../styles/windowmanager/window.scss";
 
-import { WinsContext } from "../../context/windows";
-
+import { FC } from "react";
 import { Rnd } from "react-rnd";
+
 import { TitleBar } from "./titlebar";
+import { useWindow } from './useWindow';
 
-export type Size = {
-  height: number;
-  width: number;
-};
+export type Size = { height: number, width: number };
 
-export type Position = {
-  x: number;
-  y: number;
-};
+export type Position = { x: number,  y: number};
 
-interface WinProps {
-  winId: number;
-}
+interface WinProps { id: number };
 
 export interface WinState {
   id: number;
@@ -32,9 +25,11 @@ export interface WinState {
   size: Size;
 }
 
-export const Win: FC<WinProps> = ({ winId }) => {
+export const Win: FC<WinProps> = ({ id: winId }) => {
   const {
     app,
+    appType,
+    appIconPath,
     minimized,
     maximized,
     position,
@@ -46,55 +41,41 @@ export const Win: FC<WinProps> = ({ winId }) => {
     setSize,
     onFocus,
     setPosition,
-    setTitle,
     onExit,
   } = useWindow(winId);
 
+  const className = "window" + (maximized ? "-maximized" : "");
+
   return (
     <Rnd
-      style={{ display: minimized ? "none" : "", zIndex: zIndex }}
-      position={position}
+      enableUserSelectHack={false}
+      dragHandleClassName="titlebar"
+      style={{
+        display: minimized ? "none" : "",
+        zIndex: zIndex,
+        overflowX: "hidden",
+        overflowY: "hidden",
+      }}
       onDrag={(e, data) => setPosition({ x: data.x, y: data.y })}
       onDragStart={onFocus}
-      size={size}
-      onResize={(e, direction, ref, delta, position) => {
-        setSize({
-          width: ref.offsetWidth,
-          height: ref.offsetHeight,
-        });
-      }}
-    >
+      size={maximized? {height: '100%', width: '100%'} : size}
+      position={maximized? { x: 0, y: 40} : position}
+      minHeight={200}
+      minWidth={300}
+      className={className}
+      disableDragging={maximized}
+      enableResizing={!maximized}
+      onResize={(_e, _direction, ref, _delta, _position) => {
+        setSize({ width: ref.offsetWidth, height: ref.offsetHeight});
+      }}>
       <TitleBar
+        appIconPath={appIconPath}
+        appType={appType}
         title={title}
         onMinimize={toggleMinimize}
         onMaximize={toggleMaximize}
-        onExit={onExit}
-      />
+        onExit={onExit}/>
       {app}
     </Rnd>
   );
-};
-
-const useWindow = (id: number) => {
-  const {
-    wins,
-    kill,
-    focus,
-    toggleMaximize,
-    toggleMinimize,
-    setSize,
-    setPosition,
-    setTitle,
-  } = useContext(WinsContext);
-  const winProps = wins.get(id)!;
-  return {
-    ...winProps,
-    onFocus: () => focus(id),
-    onExit: () => kill(id),
-    toggleMaximize: () => toggleMaximize(id),
-    toggleMinimize: () => toggleMinimize(id),
-    setTitle: (title: string) => setTitle(id, title),
-    setSize: (size: Size) => setSize(id, size),
-    setPosition: (position: Position) => setPosition(id, position),
-  };
 };

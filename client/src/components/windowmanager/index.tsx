@@ -1,2 +1,3 @@
-export * from "./window";
 export * from "./manager";
+
+export * from "./window";

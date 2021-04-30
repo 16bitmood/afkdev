@@ -1,61 +1,68 @@
-@import "mixins";
-
-$TASKBAR-BG: black;
-$TASKBAR-FG: white;
+@use "mixins" as *;
+@use "variables" as *;
 
 .taskbar {
-  font-family: 'Inconsolata';
-  font-size: 20px;
+  user-select: none;
+  font-family: inherit;
+  font-size: inherit;
   position: fixed;
-  display: flex;
-  align-items: center;
-  overflow-x: hidden;
+  display: inline-flex;
   left: 0;
   top: 0;
-  height: 40px;
+  height: $TASKBAR-HEIGHT;
   width: 100%;
   background-color: $TASKBAR-BG;
   color: $TASKBAR-FG;
 
   &-float-menu {
     position: fixed;
+    z-index: 10000;
     background-color: lighten($TASKBAR-BG, 40%);
     color: inherit;
     display: flex;
     flex-direction: column;
     left: 0px;
     top: 40px;
-    transition: width 2s, height 2s, transform 2s;
 
     &-button {
       @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);
       font-size: 16px;
       padding: 10px;
     }
-
   }
 
   &-menu-button {
-    &-closed {
-      @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);
+    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 100%, 100px);
+    &:hover {
+      color: $ACCENT-COLOR;
     }
     &-opened {
       @include minimal-button(darken($TASKBAR-FG, 10%), $TASKBAR-BG, 0%, 100px);
+      &:hover {
+        color: $ACCENT-COLOR;
+      }
     }
   }
 
   &-app {
-    align-self: center;
-    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 150px);
+    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 50px);
+    &:hover {
+      color: $ACCENT-COLOR;
+    }
   }
 
   &-app-focused {
-    align-self: center;
-    @include minimal-button(lighten($TASKBAR-BG, 20%), $TASKBAR-FG, 30%, 150px);
+    @include minimal-button(lighten($TASKBAR-BG, 20%), $TASKBAR-FG, 30%, 60px);
   }
 
-  &-fixed {
-    align-self: right;
-    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);
+  &-end {
+    margin-left: auto;
+  }
+
+  &-element {
+    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 00%, 150px);
+    &:hover {
+      color: $ACCENT-COLOR;
+    }
   }
 }

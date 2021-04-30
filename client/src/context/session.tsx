@@ -29,14 +29,12 @@ export const SessionContextProvider: FC = ({ children }) => {
     },
     sessionLogin: async (username: string, password: string) => {
       const r = await logIn(username, password);
-      if (r) { setIsLoggedIn(true); }
+      if (r) { setIsLoggedIn(true) }
       return r;
     },
   };
 
   return (
-    <SessionContext.Provider value={ctx}>
-      {children}
-    </SessionContext.Provider>
+    <SessionContext.Provider value={ctx}>{children}</SessionContext.Provider>
   );
 };
