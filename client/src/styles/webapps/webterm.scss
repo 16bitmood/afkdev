@@ -1,8 +1,13 @@
-// Resize Fix
+@use "colors" as *;
+
 .xterm {
-  scrollbar-color: white black;
+  scrollbar-color: $FG $BG;
   height: 100%;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+  ::-webkit-scrollbar {
+    color: $FG;
+    background: $BG;
+  }
 }

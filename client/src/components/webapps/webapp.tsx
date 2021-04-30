@@ -3,7 +3,7 @@ import type { ITerminalOptions, ITheme } from "xterm";
 import { WebTerm } from "./webterm";
 import { Dummy } from "./dummy";
 
-const termScheme: ITheme = {
+export const termScheme: ITheme = {
   background: "#1c2023",
   foreground: "#c7ccd1",
   cursor: "#c7ae95",
@@ -34,14 +34,15 @@ export interface WebAppOptions {
 const initialAppOptions = {
   term: {
     fontFamily: "Inconsolata",
-    fontSize: 14,
+    fontSize: 16,
     theme: termScheme,
   } as ITerminalOptions,
   dummy: {},
 };
 
 export const createWebApp = (options: WebAppOptions): JSX.Element => {
-  if (options.appOptions === {}) {
+  console.log(options.appOptions);
+  if (!options.appOptions || options.appOptions === {}) {
     options.appOptions = initialAppOptions[options.name];
   }
 

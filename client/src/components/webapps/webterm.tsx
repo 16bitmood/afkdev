@@ -5,14 +5,13 @@ import { WebLinksAddon } from "xterm-addon-web-links";
 import { WebglAddon } from "xterm-addon-webgl";
 
 import { createApp, connectWS } from "../../api";
-
 import { isWebGL2Available } from "../../utils";
-
 import { WebAppOptions } from "./index";
 
 import "xterm/css/xterm.css";
 import "../../styles/webapps/webterm.scss";
 import { WinsContext } from "../../context/windows";
+import { termScheme } from "./webapp";
 
 enum CMD {
   CLIENT_DATA = "0",
