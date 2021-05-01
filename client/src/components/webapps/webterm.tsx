@@ -1,7 +1,13 @@
 import "xterm/css/xterm.css";
 import "../../styles/webapps/webterm.scss";
 
-import React, { MutableRefObject, useCallback, useContext, useEffect, useRef } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import { WebLinksAddon } from "xterm-addon-web-links";
@@ -10,7 +16,7 @@ import { WebglAddon } from "xterm-addon-webgl";
 import { createApp, connectWS } from "../../api";
 import { isWebGL2Available } from "../../utils";
 import { WebAppOptions } from "./index";
-import { useWindow } from '../windowmanager';
+import { useWindow } from "../windowmanager";
 
 enum CMD {
   CLIENT_DATA = "0",
@@ -19,8 +25,8 @@ enum CMD {
 }
 
 export const WebTerm: React.FC<WebAppOptions> = (props) => {
-  const {needResize, setNeedResize, onExit } = useWindow(props.id);
-  
+  const { needResize, setNeedResize, onExit } = useWindow(props.id);
+
   // Refs will remain the same on re-renders
   const termAddonsRef = useRef({
     fit: new FitAddon(),

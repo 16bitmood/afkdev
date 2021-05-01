@@ -195,7 +195,8 @@ export const WinsContextProvider: FC = ({ children }) => {
     },
     setTitle: (id, title) => dispatch({ type: "setTitle", id, title }),
     setSize: (id, size) => dispatch({ type: "setSize", id, size }),
-    setNeedResize: (id, needResize) => dispatch({ type: "setNeedResize", id, needResize}),
+    setNeedResize: (id, needResize) =>
+      dispatch({ type: "setNeedResize", id, needResize }),
     setPosition: (id, position) =>
       dispatch({ type: "setPosition", id, position }),
   };

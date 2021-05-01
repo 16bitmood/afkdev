@@ -73,7 +73,8 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
       onResize={(_e, _direction, ref, _delta, _position) => {
         setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
         setNeedResize(true);
-      }}>
+      }}
+    >
       <TitleBar
         appIconPath={appIconPath}
         appType={appType}
