@@ -1,3 +1,6 @@
+import "xterm/css/xterm.css";
+import "../../styles/webapps/webterm.scss";
+
 import React, { MutableRefObject, useContext, useEffect, useRef } from "react";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
@@ -8,10 +11,7 @@ import { createApp, connectWS } from "../../api";
 import { isWebGL2Available } from "../../utils";
 import { WebAppOptions } from "./index";
 
-import "xterm/css/xterm.css";
-import "../../styles/webapps/webterm.scss";
 import { WinsContext } from "../../context/windows";
-import { termScheme } from "./webapp";
 
 enum CMD {
   CLIENT_DATA = "0",

@@ -2,9 +2,9 @@ import "./styles/loginForm.scss";
 
 import { FC, useContext, useState } from "react";
 
-import { SessionContext } from "./context/session";
+import { SessionContext } from "../context/session";
 
-export const LoginForm: FC = () => {
+export const LoginPage: FC = () => {
   const { sessionLogin } = useContext(SessionContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -5,8 +5,8 @@ import { FC, useContext, useEffect } from "react";
 import { isLoggedIn as isAuthenticated } from "./api";
 import { SessionContext, SessionContextProvider } from "./context/session";
 
-import { Home } from "./home";
-import { LoginForm } from "./loginForm";
+import { HomePage } from "./containers/home";
+import { LoginPage } from "./containers/login";
 
 const LoadingScreen = () => <h1>Loading...</h1>;
 
@@ -24,9 +24,9 @@ const HandlePages: FC<{}> = () => {
   if (isLoggedIn === null) {
     return <LoadingScreen />;
   } else if (isLoggedIn) {
-    return <Home />;
+    return <HomePage />;
   } else {
-    return <LoginForm />;
+    return <LoginPage />;
   }
 };
 

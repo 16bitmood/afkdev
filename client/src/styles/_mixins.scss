@@ -14,15 +14,19 @@
   color: $fg;
   cursor: pointer;
   text-align: center;
-  transition: background 125ms ease-in-out, transform 75ms ease;
+  transition: background-color 125ms ease-in-out, transform 75ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 
   &:hover {
-    background: lighten($bg, $lighten-amount);
+    background-color: lighten($bg, $lighten-amount);
   }
 
   &:active {
     transform: scale(0.9);
   }
+}
+
+@mixin google-font($family) {
+  @import url(https://fonts.googleapis.com/css?family=#{$family});
 }

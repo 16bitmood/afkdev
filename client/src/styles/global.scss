@@ -1,6 +1,10 @@
+@use "mixins" as *;
 @use 'colors';
-@use 'fonts';
+
 // Fonts
+@include google-font("Lato:100,300,400");
+@include google-font("Inconsolata");
+
 html {
   overflow: hidden;
   min-height: 100%;

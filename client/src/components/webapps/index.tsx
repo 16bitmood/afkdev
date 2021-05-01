@@ -1,4 +1,4 @@
-export * from "./webapp";
+export * from "./createWebApp";
 
 export * from "./webterm";
 
