@@ -19,9 +19,6 @@ export const LoginPage: FC = () => {
       setAttempts((a) => a + 1);
     }
   };
-  const Alert: FC<{ a: number }> = ({ a }) => {
-    return <div className="alert"> {a} Incorrect Attempts </div>;
-  };
 
   const headerClick = () => {};
 
@@ -40,7 +37,7 @@ export const LoginPage: FC = () => {
           onChange={(ev) => setPassword(ev.target.value)}
         />
         <input type="submit" value="login" />
-        {incorrectAttempt ? <Alert a={attempts} /> : <></>}
+        {incorrectAttempt ? <div className='alert'> {attempts} Incorrect Attempts! </div> : <></>}
       </form>
       <button>about</button>
     </div>
