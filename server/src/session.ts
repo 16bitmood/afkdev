@@ -4,7 +4,7 @@ import session from "express-session";
 import type { WebApp } from "./webapps";
 
 // Internal Imports
-import { SESSION_OPTIONS, SESSION_NAME } from "./config";
+import { SESSION_OPTIONS } from "./config";
 import { Unauthorized, BadRequest } from "./errors";
 
 // Declarations
@@ -33,7 +33,7 @@ export function logIn(req: Request, username: string): void {
   sessionApps.set(req.sessionID, new Map());
 }
 
-export function logOut(req: Request, res: Response): void {
+export function logOut(req: Request, _res: Response): void {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }

@@ -1,14 +1,14 @@
 import { Router } from "express";
-
+import crypto from "crypto";
 import { USERS } from "../config";
 import { isLoggedIn, logIn, logOut } from "../session";
 import { BadRequest, Unauthorized } from "../errors";
 
 const router = Router();
 
-const hashText = (text: string): string =>  {
-	return (require('crypto')).createHash('sha256').update(text).digest('hex');
-}
+const hashText = (text: string): string => {
+  return crypto.createHash("sha256").update(text).digest("hex");
+};
 
 function isVerified(u: string, p: string): boolean {
   const pHash = hashText(p);
