@@ -9,9 +9,12 @@ html {
   overflow: hidden;
   min-height: 100%;
   min-width: 100%;
-
+  margin: 0;
+  padding: 0;
   body {
     @include theme;
+    margin: 0;
+    padding: 0;
 
     font-family: "Inconsolata", monospace;
     font-size: 16px;
