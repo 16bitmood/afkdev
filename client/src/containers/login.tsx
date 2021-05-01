@@ -37,7 +37,11 @@ export const LoginPage: FC = () => {
           onChange={(ev) => setPassword(ev.target.value)}
         />
         <input type="submit" value="login" />
-        {incorrectAttempt ? <div className='alert'> {attempts} Incorrect Attempts! </div> : <></>}
+        {incorrectAttempt ? (
+          <div className="alert"> {attempts} Incorrect Attempts! </div>
+        ) : (
+          <></>
+        )}
       </form>
       <button>about</button>
     </div>

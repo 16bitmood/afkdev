@@ -1,10 +1,11 @@
 {
   "name": "afkdev",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Remote Desktop Environment",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "buildClient": "cd client && npm install && npm run check",
+    "buildServer": "cd server && npm install && npm run check",
+    "dev": "npm run buildServer && npm run buildClient && cd server && npm run dev"
   },
   "keywords": [],
   "author": "",

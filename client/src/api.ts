@@ -63,16 +63,16 @@ export const getStats = async () => {
 };
 
 export const connectWS = (appId: number) => {
-  const makeWsUrl = (s : string): string => {
+  const makeWsUrl = (s: string): string => {
     const l = window.location;
     return (
-      (l.protocol === "https:") ? "wss://" : "ws://")
-      + l.hostname
-      + (((l.port !== '80') && (l.port !== '443')) ? ":" + l.port : "")
-      + l.pathname
-      + s;
-  }
-  const wsUrl = makeWsUrl(`_connect?appId=${appId}`)
-  console.log(wsUrl);
+      (l.protocol === "https:" ? "wss://" : "ws://") +
+      l.hostname +
+      (l.port !== "80" && l.port !== "443" ? ":" + l.port : "") +
+      l.pathname +
+      s
+    );
+  };
+  const wsUrl = makeWsUrl(`_connect?appId=${appId}`);
   return new WebSocket(wsUrl);
 };

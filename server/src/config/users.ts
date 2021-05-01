@@ -1,3 +1,1 @@
-// TODO: use a users.csv file
-export const TEMP_USERNAME = "temp";
-export const TEMP_PASSWORD = "temp";
+export {default as USERS} from '../../../.env.d/users.json';

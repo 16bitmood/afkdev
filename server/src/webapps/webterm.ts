@@ -94,8 +94,8 @@ export class WebTerm {
       case "resize": {
         const { cols, rows } = command;
         if (!cols || !rows) {
-          console.log('error: ', cols, rows)
-          return { result: "Ok"};
+          console.log("error: ", cols, rows);
+          return { result: "Ok" };
           // temp
           // throw new BadRequest("Invalid Command");
         }

@@ -1,13 +1,23 @@
 import { Router } from "express";
 
-import { TEMP_PASSWORD, TEMP_USERNAME } from "../config";
+import { USERS } from "../config";
 import { isLoggedIn, logIn, logOut } from "../session";
 import { BadRequest, Unauthorized } from "../errors";
 
 const router = Router();
 
+const hashText = (text: string): string =>  {
+	return (require('crypto')).createHash('sha256').update(text).digest('hex');
+}
+
 function isVerified(u: string, p: string): boolean {
-  return u === TEMP_USERNAME && p === TEMP_PASSWORD;
+  const pHash = hashText(p);
+  const matched = USERS.filter((userdat) => userdat.username === u)[0];
+  if (!matched) {
+    return false;
+  } else {
+    return pHash === matched.hashedPassword;
+  }
 }
 
 router.post("/login", (req, res) => {
@@ -25,8 +35,8 @@ router.post("/login", (req, res) => {
 
 router.post("/logout", (req, res) => {
   if (isLoggedIn(req)) {
-      logOut(req, res);
-      return res.sendStatus(200);
+    logOut(req, res);
+    return res.sendStatus(200);
   } else {
     throw new BadRequest("Not Logged In!");
   }

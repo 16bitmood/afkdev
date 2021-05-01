@@ -3,7 +3,6 @@ import type { Server } from "http";
 import type { Response } from "express";
 
 import { sessionParser, getSessionApp } from "./session";
-import { WebApp } from "./webapps";
 import { Unauthorized } from "./errors";
 
 function parseAppId(u: string) {
@@ -23,7 +22,7 @@ export function handleWS(server: Server) {
     sessionParser(req, {} as Response, () => {
       try {
         const appId = parseAppId(req.url);
-        const app: WebApp = getSessionApp(req, appId);
+        const app = getSessionApp(req, appId);
 
         wss.handleUpgrade(req, socket, head, (ws) => {
           app.connect(ws);

@@ -15,7 +15,7 @@ router.get("/manage/create/:appName", (req, res) => {
   }
 
   const appName = req.params.appName;
-  const app = makeApp(appName);
+  const app = makeApp(appName, req.session.username!);
   const appId = app.id;
   setSessionApp(req, app.id, app);
 

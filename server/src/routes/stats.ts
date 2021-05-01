@@ -11,9 +11,9 @@ router.get("/stats", (req, res) => {
   }
 
   res.json({
-      'ip': (req.ip === '::ffff:127.0.0.1' || req.ip === '::1') ? 'localhost' : req.ip,
+    ip:
+      req.ip === "::ffff:127.0.0.1" || req.ip === "::1" ? "localhost" : req.ip,
   });
-
 });
 
 export { router as stats };
