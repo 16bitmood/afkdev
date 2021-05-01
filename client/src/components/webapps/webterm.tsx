@@ -3,8 +3,6 @@ import "../../styles/webapps/webterm.scss";
 
 import React, {
   MutableRefObject,
-  useCallback,
-  useContext,
   useEffect,
   useRef,
 } from "react";

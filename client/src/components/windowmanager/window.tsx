@@ -31,7 +31,6 @@ export interface WinState {
 export const Win: FC<WinProps> = ({ id: winId }) => {
   const {
     app,
-    needResize,
     setNeedResize,
     appType,
     appIconPath,
