@@ -47,7 +47,7 @@
 @keyframes explodeY {
   from {
     transform: scaleY(0);
-  } 
+  }
 
   to {
     transform: scaleY(1);
@@ -58,8 +58,8 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
-  
 }

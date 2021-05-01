@@ -1,6 +1,9 @@
+@use "colors" as *;
+
 @mixin minimal-button($bg, $fg, $lighten-amount, $width) {
-  font-family: inherit;
-  font-size: inherit;
+  background-color: $bg;
+  color: $fg;
+  font: inherit;
   overflow-x: hidden;
   width: $width;
   height: 100%;
@@ -8,15 +11,8 @@
   justify-content: center;
   align-items: center;
   border: none;
-  margin: 0;
-  text-decoration: none;
-  background: $bg;
-  color: $fg;
   cursor: pointer;
-  text-align: center;
   transition: background-color 125ms ease-in-out, transform 75ms ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 
   &:hover {
     background-color: lighten($bg, $lighten-amount);
@@ -28,5 +24,25 @@
 }
 
 @mixin google-font($family) {
+  // stylelint-disable
   @import url(https://fonts.googleapis.com/css?family=#{$family});
+  // stylelint-enable
+}
+
+@mixin flex-max-center {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin theme {
+  color: $FG;
+  background-color: $BG;
+}
+
+@mixin theme-invert {
+  color: $BG;
+  background-color: $FG;
 }

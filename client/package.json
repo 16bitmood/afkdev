@@ -9,8 +9,8 @@
     "eslint": "eslint src",
     "prettier": "prettier --write .",
     "stylelint": "stylelint src/styles",
-    "start": "SASS_PATH=src/styles && react-scripts start",
-    "build": "react-scripts build",
+    "start": "export SASS_PATH=src/styles && react-scripts start",
+    "build": "export SASS_PATH=src/styles && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

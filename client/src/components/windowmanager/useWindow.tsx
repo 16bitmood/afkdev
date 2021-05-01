@@ -11,6 +11,7 @@ export const useWindow = (id: number) => {
     toggleMaximize,
     toggleMinimize,
     setSize,
+    setNeedResize,
     setPosition,
     setTitle,
   } = useContext(WinsContext);
@@ -24,5 +25,6 @@ export const useWindow = (id: number) => {
     setTitle: (title: string) => setTitle(id, title),
     setSize: (size: Size) => setSize(id, size),
     setPosition: (position: Position) => setPosition(id, position),
+    setNeedResize: (b: boolean) => setNeedResize(id, b),
   };
 };

@@ -1,7 +1,7 @@
 import "xterm/css/xterm.css";
 import "../../styles/webapps/webterm.scss";
 
-import React, { MutableRefObject, useContext, useEffect, useRef } from "react";
+import React, { MutableRefObject, useCallback, useContext, useEffect, useRef } from "react";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import { WebLinksAddon } from "xterm-addon-web-links";
@@ -10,8 +10,7 @@ import { WebglAddon } from "xterm-addon-webgl";
 import { createApp, connectWS } from "../../api";
 import { isWebGL2Available } from "../../utils";
 import { WebAppOptions } from "./index";
-
-import { WinsContext } from "../../context/windows";
+import { useWindow } from '../windowmanager';
 
 enum CMD {
   CLIENT_DATA = "0",
@@ -20,13 +19,13 @@ enum CMD {
 }
 
 export const WebTerm: React.FC<WebAppOptions> = (props) => {
-  const { wins, kill } = useContext(WinsContext);
-
+  const {needResize, setNeedResize, onExit } = useWindow(props.id);
+  
   // Refs will remain the same on re-renders
   const termAddonsRef = useRef({
     fit: new FitAddon(),
     webLinks: new WebLinksAddon(),
-    webgl: isWebGL2Available() ? new WebglAddon() : null,
+    webgl: false && isWebGL2Available() ? new WebglAddon() : null, // TODO: Add an options app;
   });
   const termRef = useRef(new Terminal(props.appOptions));
   const termContainerRef: MutableRefObject<HTMLDivElement | null> = useRef(
@@ -105,11 +104,11 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
     }
   };
 
-  const onExit = () => {
+  const onClose = () => {
     if (wsRef.current) {
       wsRef.current.close();
       termRef.current.dispose();
-      kill(props.id);
+      onExit();
     }
   };
 
@@ -118,19 +117,22 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
     wsRef.current = connectWS(pidRef.current!);
     wsRef.current.onopen = onSocketOpen;
     wsRef.current.onmessage = onSocketMessage;
-    wsRef.current.onerror = onExit;
-    wsRef.current.onclose = onExit;
+    wsRef.current.onerror = onClose;
+    wsRef.current.onclose = onClose;
   };
 
   useEffect(() => {
     initializeTerm();
     connectWebTerm();
-    return onExit;
+    return onClose;
   }, []);
 
   useEffect(() => {
-    termAddonsRef.current.fit.fit();
-  }, [wins]); // TODO: is this okay for performance?
+    if (needResize) {
+      termAddonsRef.current.fit.fit();
+      setNeedResize(false);
+    }
+  }, [needResize]);
 
   return (
     <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />

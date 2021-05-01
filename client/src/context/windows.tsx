@@ -36,6 +36,7 @@ export interface WinsContextType {
   setTitle: (id: number, t: string) => void;
   setSize: (id: number, s: Size) => void;
   setPosition: (id: number, p: Position) => void;
+  setNeedResize: (id: number, b: boolean) => void;
 }
 
 type WindowsReducerActions = {
@@ -46,9 +47,11 @@ type WindowsReducerActions = {
     | "toggleMinimize"
     | "toggleMaximize"
     | "setSize"
+    | "setNeedResize"
     | "setPosition"
     | "setTitle";
   id?: number;
+  needResize?: boolean;
   name?: "term" | "dummy"; // TODO:
   size?: Size;
   position?: Position;
@@ -65,6 +68,7 @@ export const initialWindowsContext: WinsContextType = {
   toggleMaximize: () => {},
   setTitle: () => {},
   setSize: () => {},
+  setNeedResize: () => {},
   setPosition: () => {},
 };
 
@@ -72,7 +76,8 @@ export const WinsContext = createContext(initialWindowsContext);
 
 const initialWindowProps: Partial<WinState> = {
   position: { x: 0, y: 0 },
-  size: { height: 300, width: 500 },
+  size: { height: 400, width: 600 },
+  needResize: false,
   minimized: false,
   maximized: false,
 };
@@ -141,6 +146,13 @@ const windowsReducer = (
       prevState.set(id!, winProps);
       break;
     }
+    case "setNeedResize": {
+      const id = action.id;
+      const winProps = prevState.get(id!)!;
+      winProps.needResize = action.needResize!;
+      prevState.set(id!, winProps);
+      break;
+    }
     case "setPosition": {
       const id = action.id;
       const position = action.position!;
@@ -183,6 +195,7 @@ export const WinsContextProvider: FC = ({ children }) => {
     },
     setTitle: (id, title) => dispatch({ type: "setTitle", id, title }),
     setSize: (id, size) => dispatch({ type: "setSize", id, size }),
+    setNeedResize: (id, needResize) => dispatch({ type: "setNeedResize", id, needResize}),
     setPosition: (id, position) =>
       dispatch({ type: "setPosition", id, position }),
   };

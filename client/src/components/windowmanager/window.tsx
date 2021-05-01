@@ -16,6 +16,7 @@ interface WinProps {
 
 export interface WinState {
   id: number;
+  needResize: boolean;
   appType: string;
   appIconPath: string;
   zIndex: number;
@@ -30,6 +31,8 @@ export interface WinState {
 export const Win: FC<WinProps> = ({ id: winId }) => {
   const {
     app,
+    needResize,
+    setNeedResize,
     appType,
     appIconPath,
     minimized,
@@ -69,8 +72,8 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
       enableResizing={!maximized}
       onResize={(_e, _direction, ref, _delta, _position) => {
         setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
-      }}
-    >
+        setNeedResize(true);
+      }}>
       <TitleBar
         appIconPath={appIconPath}
         appType={appType}

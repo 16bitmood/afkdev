@@ -9,15 +9,14 @@ import { HomePage } from "./containers/home";
 import { LoginPage } from "./containers/login";
 import { LoadingPage } from "./containers/loading";
 
-
 const HandlePages: FC<{}> = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(SessionContext);
-  const [showLoading, setShowLoading ] = useState(true);
+  const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
     const i = setInterval(() => setShowLoading(false), 1000);
     return () => clearInterval(i);
-  },[]);
+  }, []);
 
   useEffect(() => {
     const checkLogin = async () => {

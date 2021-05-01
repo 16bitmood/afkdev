@@ -1,5 +1,5 @@
 @use "mixins" as *;
-@use 'colors';
+@use 'colors' as *;
 
 // Fonts
 @include google-font("Lato:100,300,400");
@@ -11,10 +11,10 @@ html {
   min-width: 100%;
 
   body {
+    @include theme;
+
     font-family: "Inconsolata", monospace;
     font-size: 16px;
-    color: colors.$FG;
-    background: colors.$BG;
     overscroll-behavior: contain;
   }
 }
@@ -23,4 +23,8 @@ html {
   position: fixed;
   height: 100%;
   width: 100%;
+}
+
+*,*:focus,*:hover{
+  outline:none;
 }
