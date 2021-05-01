@@ -43,3 +43,23 @@
     transform: translate(1px, -2px) rotate(-1deg);
   }
 }
+
+@keyframes explodeY {
+  from {
+    transform: scaleY(0);
+  } 
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  
+}

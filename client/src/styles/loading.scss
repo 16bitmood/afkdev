@@ -1,0 +1,24 @@
+@use "colors" as *;
+@use "animations" as *;
+
+.loading {
+    animation: fade 1s;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+        text-align: center;
+        padding: 50px 50px 50px 50px;
+        line-height: 100px;
+        font-size: 100px;
+        letter-spacing: 50px;
+        font-family: "Lato";
+        border: 2px solid $C8;
+        outline: 2px solid $C8;
+        outline-offset: -10px;
+
+    }
+}

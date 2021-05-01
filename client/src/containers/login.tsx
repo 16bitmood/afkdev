@@ -1,4 +1,4 @@
-import "./styles/loginForm.scss";
+import "../styles/login.scss";
 
 import { FC, useContext, useState } from "react";
 
@@ -42,6 +42,7 @@ export const LoginPage: FC = () => {
         <input type="submit" value="login" />
         {incorrectAttempt ? <Alert a={attempts} /> : <></>}
       </form>
+      <button>about</button>
     </div>
   );
 };

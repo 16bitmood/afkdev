@@ -3,16 +3,21 @@
 @use "animations" as *;
 
 .wrapper-login-form {
-  padding: 15%;
+  animation: ease-out fade 1s;
   font-family: "Lato", sans-serif;
   font-size: 0.875em;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
   color: $FG;
   background: $BG;
 
   header {
-    margin-left: auto;
     box-sizing: border-box;
-    margin-right: auto;
     width: 400px;
     height: 100px;
     line-height: 100px;
@@ -31,14 +36,38 @@
       outline-color: $FG;
     }
   }
+
+  button {
+    box-sizing: border-box;
+    font-family: "Inconsolata", monospace;
+    font-size: 20px;
+    letter-spacing: 3px;
+    background: inherit;
+    color: inherit;
+    width: 200px;
+    height: 50px;
+    padding: 0 15px 0 15px;
+    outline: none;
+    border: solid 1px $C4;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background: $C4;
+      color: $BG;
+    }
+    &:focus {
+      background: $C4;
+      color: $BG;
+    }
+  }
 }
 
 .login-form {
   width: 400px;
-  margin: 50px auto 100px auto;
   font-family: "Inconsolata", monospace;
   font-size: 20px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 
   .alert {
     animation: shaker 0.3s;
@@ -65,27 +94,28 @@
     border: solid 1px $C2;
     transition: all 0.3s ease-in-out;
 
+    &[type="submit"] {
+      cursor: pointer;
+    }
+
     &[type="text"],
     &[type="password"] {
       border-bottom: none;
     }
-  }
+    &:hover {
+      background: $C2;
+      color: $BG;
+    }
+    &:focus {
+      background: $C2;
+      color: $BG;
+    }
+    &::placeholder {
+      color: $C8;
+    }
 
-  input:hover {
-    background: $C2;
-    color: $BG;
-  }
-
-  input::placeholder {
-    color: $C8;
-  }
-
-  input:hover::placeholder {
-    color: $BG;
-  }
-
-  input:focus {
-    background: $C2;
-    color: $BG;
+    &:hover::placeholder {
+      color: $BG;
+    }
   }
 }
