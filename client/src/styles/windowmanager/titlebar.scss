@@ -1,39 +1,39 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .titlebar {
   font-family: inherit;
-  opacity: 0.8;
-  background-color: $TITLEBAR-BG;
-  color: white;
-  height: $TITLEBAR-HEIGHT;
   font-size: 18px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  height: $TITLEBAR-HEIGHT;
+  opacity: 0.8;
+  color: white;
+  background-color: $TITLEBAR-BG;
 
   &-left {
     font: inherit;
     font-size: inherit;
-    margin-left: 20px;
     justify-content: flex-start;
+    margin-left: 20px;
   }
 
   &-center {
-    align-self: center;
-    justify-self: stretch;
     font: inherit;
     font-size: inherit;
+    align-self: center;
+    justify-self: stretch;
   }
 
   &-right {
     display: flex;
-    border: none;
-    padding: none;
+    align-items: center;
+    justify-content: flex-end;
     height: 100%;
     margin: 0;
-    justify-content: flex-end;
-    align-items: center;
+    padding: none;
+    border: none;
 
     &-button {
       @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, 30%, 50px);

@@ -1,29 +1,29 @@
-@use "colors" as *;
-@use "mixins" as *;
-@use "animations" as *;
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'animations' as *;
 
 .wrapper-login-form {
   @include flex-max-center;
   @include theme;
 
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
   flex-direction: column;
   animation: ease-out fade 1s;
-  font-family: "Lato", sans-serif;
-  font-size: 0.875em;
 
   header {
-    margin: 70px;
+    font-size: 2.3em;
+    line-height: 100px;
     box-sizing: border-box;
     width: 400px;
     height: 100px;
-    line-height: 100px;
+    margin: 70px;
+    transition: all ease-in-out 0.3s;
+    text-align: center;
+    letter-spacing: 20px;
     border: 2px solid $C8;
     outline: 2px solid $C8;
     outline-offset: -10px;
-    font-size: 2.3em;
-    text-align: center;
-    letter-spacing: 20px;
-    transition: all ease-in-out 0.3s;
 
     &:hover {
       @include theme-invert;
@@ -36,76 +36,76 @@
   button {
     @include theme;
 
-    margin: 70px;
-    box-sizing: border-box;
-    font-family: "Inconsolata", monospace;
+    font-family: 'Inconsolata', monospace;
     font-size: 20px;
-    letter-spacing: 3px;
+    box-sizing: border-box;
     width: 200px;
     height: 50px;
+    margin: 70px;
     padding: 0 15px 0 15px;
-    outline: none;
-    border: solid 1px $C4;
-    transition: all 0.3s ease-in-out;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 3px;
+    border: solid 1px $C4;
+    outline: none;
 
     &:hover {
-      background: $C4;
       color: $BG;
+      background: $C4;
     }
 
     &:focus {
-      background: $C4;
       color: $BG;
+      background: $C4;
     }
   }
 }
 
 .login-form {
-  width: 400px;
-  font-family: "Inconsolata", monospace;
+  font-family: 'Inconsolata', monospace;
   font-size: 20px;
+  width: 400px;
   letter-spacing: 3px;
 
   .alert {
-    animation: shaker 0.3s;
-    margin: 50px auto auto auto;
     font-size: 24px;
     font-weight: bold;
-    text-align: center;
     width: 100%;
+    margin: 50px auto auto auto;
+    animation: shaker 0.3s;
+    text-align: center;
     color: $C5;
   }
 
   input {
     @include theme;
 
-    box-sizing: border-box;
     font: inherit;
-    letter-spacing: inherit;
+    box-sizing: border-box;
     width: 100%;
     height: 50px;
     padding: 0 15px 0 15px;
-    border: solid 1px $C2;
     transition: all 0.3s ease-in-out;
+    letter-spacing: inherit;
+    border: solid 1px $C2;
 
-    &[type="submit"] {
+    &[type='submit'] {
       cursor: pointer;
     }
 
-    &[type="text"],
-    &[type="password"] {
+    &[type='text'],
+    &[type='password'] {
       border-bottom: none;
     }
 
     &:hover {
-      background: $C2;
       color: $BG;
+      background: $C2;
     }
 
     &:focus {
-      background: $C2;
       color: $BG;
+      background: $C2;
     }
 
     &::placeholder {

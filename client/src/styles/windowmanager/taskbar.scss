@@ -1,29 +1,29 @@
-@use "mixins" as *;
-@use "variables" as *;
+@use 'mixins' as *;
+@use 'variables' as *;
 
 .taskbar {
-  box-shadow: 1px 1px 100px 1px black;
-  user-select: none;
   font-family: inherit;
   font-size: inherit;
   position: fixed;
-  display: inline-flex;
-  left: 0;
   top: 0;
-  height: $TASKBAR-HEIGHT;
+  left: 0;
+  display: inline-flex;
   width: 100%;
-  background-color: $TASKBAR-BG;
+  height: $TASKBAR-HEIGHT;
+  user-select: none;
   color: $TASKBAR-FG;
+  background-color: $TASKBAR-BG;
+  box-shadow: 1px 1px 100px 1px black;
 
   &-float-menu {
     position: fixed;
     z-index: 10000;
-    background-color: lighten($TASKBAR-BG, 40%);
-    color: inherit;
+    top: 40px;
+    left: 0;
     display: flex;
     flex-direction: column;
-    left: 0;
-    top: 40px;
+    color: inherit;
+    background-color: lighten($TASKBAR-BG, 40%);
 
     &-button {
       @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);

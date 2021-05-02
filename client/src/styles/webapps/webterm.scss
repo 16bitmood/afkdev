@@ -1,12 +1,12 @@
-@use "colors" as *;
+@use 'colors' as *;
 
 .xterm,
 .terminal {
-  scrollbar-color: $FG $BG;
-  height: 100%;
-  width: 100%;
-  padding: 30px;
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  scrollbar-color: $FG $BG;
 
   ::-webkit-scrollbar {
     color: $FG;
