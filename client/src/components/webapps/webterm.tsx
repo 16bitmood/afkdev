@@ -18,7 +18,7 @@ enum CMD {
   SERVER_DATA = "0",
 }
 
-export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
+export const WebTerm: React.FC<WebAppOptions> = ({ id, appOptions }) => {
   const { needResize, setNeedResize, onExit } = useWindow(id);
 
   // Refs will remain the same on re-renders
@@ -28,7 +28,7 @@ export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
     // eslint-disable-next-line
     webgl: false && isWebGL2Available() ? new WebglAddon() : null, // TODO: Add an options app;
   });
-  const termRef = useRef(new Terminal(appOptions || {}))
+  const termRef = useRef(new Terminal(appOptions || {}));
   const termContainerRef: MutableRefObject<HTMLDivElement | null> = useRef(
     null
   );
@@ -84,10 +84,9 @@ export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
     }
   };
 
-
   const onSocketOpen = async () => {
-    const {rows, cols} = termAddonsRef.current.fit.proposeDimensions();
-    await onTermResize({rows, cols:cols-1});
+    const { rows, cols } = termAddonsRef.current.fit.proposeDimensions();
+    await onTermResize({ rows, cols: cols - 1 });
   };
 
   const onSocketMessage = (ev: MessageEvent) => {
@@ -119,7 +118,7 @@ export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
       wsRef.current.onerror = onClose;
       wsRef.current.onclose = onClose;
     } else {
-      throw new Error('App was not created!');
+      throw new Error("App was not created!");
     }
   };
 
@@ -131,15 +130,18 @@ export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
 
   useEffect(() => {
     if (needResize) {
-      const {rows, cols} = termAddonsRef.current.fit.proposeDimensions();
+      const { rows, cols } = termAddonsRef.current.fit.proposeDimensions();
       // TODO: temp fix, fitaddon is not correctly calculating rows, maybe
       // becuase it's not correctly identifying parent element
-      termRef.current.resize(cols, rows-1);
+      termRef.current.resize(cols, rows - 1);
       setNeedResize(false);
     }
   }, [needResize]);
 
   return (
-    <div style={{ height: "100%", width: "100%", boxSizing: 'border-box'}} ref={termContainerRef} />
+    <div
+      style={{ height: "100%", width: "100%", boxSizing: "border-box" }}
+      ref={termContainerRef}
+    />
   );
 };

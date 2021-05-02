@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Types
-export type Stats = {ip: string};
+export type Stats = { ip: string };
 
 // Errors
 export class Unauthorized extends Error {
@@ -72,7 +72,7 @@ export const connectWS = (appId: number): WebSocket => {
     return (
       (l.protocol === "https:" ? "wss://" : "ws://") +
       l.hostname +
-      (l.port !== "80" && l.port !== "443" ? `:${  l.port}` : "") +
+      (l.port !== "80" && l.port !== "443" ? `:${l.port}` : "") +
       l.pathname +
       s
     );

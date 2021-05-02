@@ -16,7 +16,7 @@ export const useWindow = (id: number): any => {
     setPosition,
     setTitle,
   } = useContext(WinsContext);
-  const [ winState ] = wins.filter(o => o.id === id);
+  const [winState] = wins.filter((o) => o.id === id);
   return {
     ...winState,
     onFocus: () => focus(id),

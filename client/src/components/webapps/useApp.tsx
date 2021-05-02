@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { WinsContext } from "../../context/windows";
 
 export type AppContext = {
-  onExit: () => void,
-  onTitleChange: (t: string) => void
-}
+  onExit: () => void;
+  onTitleChange: (t: string) => void;
+};
 
 export const useApp = (id: number): AppContext => {
   const { kill, setTitle } = useContext(WinsContext);

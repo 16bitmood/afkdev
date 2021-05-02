@@ -16,9 +16,11 @@ export const WindowManager: FC = () => {
       }}
     >
       <Taskbar />
-      {wins.map(o => o.id).map((id) => (
-        <Win key={id} id={id} />
-      ))}
+      {wins
+        .map((o) => o.id)
+        .map((id) => (
+          <Win key={id} id={id} />
+        ))}
     </div>
   );
 };

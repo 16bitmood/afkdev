@@ -1,6 +1,7 @@
 @use "colors" as *;
 
-.xterm, .terminal {
+.xterm,
+.terminal {
   scrollbar-color: $FG $BG;
   height: 100%;
   width: 100%;
@@ -11,9 +12,11 @@
     color: $FG;
     background: $BG;
   }
+
   &-viewport {
     box-sizing: border-box;
   }
+
   &-screen {
     box-sizing: border-box;
   }

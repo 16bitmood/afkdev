@@ -3,9 +3,13 @@
   "version": "0.0.1",
   "description": "Remote Desktop Environment",
   "scripts": {
-    "buildClient": "cd client && npm install && npm run check",
-    "buildServer": "cd server && npm install && npm run check",
-    "dev": "npm run buildServer && npm run buildClient && cd server && npm run dev"
+    "install": "npm run installClientDeps && npm run installServerDeps",
+    "installClientDeps": "cd client && npm install",
+    "installServerDeps": "cd server && npm install",
+    "buildClient": "cd client && npm run check",
+    "buildServer": "cd server && npm run check",
+    "check": "npm run buildServer && npm run buildClient",
+    "dev": "npm run check && cd server && npm run dev"
   },
   "author": "Gurdit Singh Siyan",
   "license": "MIT"

@@ -48,7 +48,7 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
     onExit,
   } = useWindow(winId);
 
-  const className = `window${  maximized ? "-maximized" : ""}`;
+  const className = `window${maximized ? "-maximized" : ""}`;
 
   return (
     <Rnd

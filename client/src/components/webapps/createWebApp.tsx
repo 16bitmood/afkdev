@@ -29,7 +29,7 @@ export type WebAppOptions = {
   id: number;
   name: "term" | "dummy";
   appOptions?: ITerminalOptions | null;
-}
+};
 
 const initialAppOptions = {
   term: {

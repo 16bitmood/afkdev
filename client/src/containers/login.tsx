@@ -1,6 +1,6 @@
 import "../styles/login.scss";
 
-import { FC, useContext, useState } from "react";
+import { FC, FormEventHandler, useContext, useState } from "react";
 
 import { SessionContext } from "../context/session";
 
@@ -11,7 +11,8 @@ export const LoginPage: FC = () => {
   const [incorrectAttempt, setIncorrectAttempt] = useState(false);
   const [attempts, setAttempts] = useState(0);
 
-  const handleSubmit = async () => {
+  const handleSubmit: FormEventHandler = async (ev) => {
+    ev.preventDefault();
     const r = await sessionLogin(username, password);
     if (!r) {
       setIncorrectAttempt(true);
@@ -43,7 +44,7 @@ export const LoginPage: FC = () => {
           <></>
         )}
       </form>
-      <button type='button'>about</button>
+      <button type="button">about</button>
     </div>
   );
 };

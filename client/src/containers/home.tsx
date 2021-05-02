@@ -3,7 +3,7 @@ import { WinsContextProvider } from "../context/windows";
 import { WindowManager } from "../components/windowmanager";
 
 export const HomePage: FC = () => (
-    <WinsContextProvider>
-      <WindowManager />
-    </WinsContextProvider>
-  );
+  <WinsContextProvider>
+    <WindowManager />
+  </WinsContextProvider>
+);

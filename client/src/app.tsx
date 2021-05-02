@@ -1,6 +1,6 @@
 import "./styles/global.scss";
 
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect } from "react";
 
 import { isLoggedIn as isAuthenticated } from "./api";
 import { SessionContext, SessionContextProvider } from "./context/session";
@@ -11,12 +11,6 @@ import { LoadingPage } from "./containers/loading";
 
 const HandlePages: FC = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(SessionContext);
-  const [showLoading, setShowLoading] = useState(true);
-
-  useEffect(() => {
-    const i = setInterval(() => setShowLoading(false), 1000);
-    return () => clearInterval(i);
-  }, []);
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -26,20 +20,20 @@ const HandlePages: FC = () => {
     checkLogin();
   }, []);
 
-  if (isLoggedIn === null || showLoading) {
+  if (isLoggedIn === null) {
     return <LoadingPage />;
-  } if (isLoggedIn) {
+  }
+  if (isLoggedIn) {
     return <HomePage />;
-  } 
-    return <LoginPage />;
-  
+  }
+  return <LoginPage />;
 };
 
 const App: FC = ({ children }) => (
-    <SessionContextProvider>
-      <HandlePages />
-      {children}
-    </SessionContextProvider>
-  );
+  <SessionContextProvider>
+    <HandlePages />
+    {children}
+  </SessionContextProvider>
+);
 
 export default App;

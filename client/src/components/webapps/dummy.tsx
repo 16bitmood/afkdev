@@ -23,7 +23,9 @@ export const Dummy: FC<WebAppOptions> = (props) => {
         <input type="text" onChange={(ev) => setInput(ev.target.value)} />
         <button type="submit">Apply Changes</button>
       </form>
-      <button type="button" onClick={onExit}>Close App</button>
+      <button type="button" onClick={onExit}>
+        Close App
+      </button>
     </div>
   );
 };

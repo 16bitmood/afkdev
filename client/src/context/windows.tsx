@@ -1,16 +1,15 @@
-import { FC, useReducer , createContext, useState } from "react";
-
+import { FC, useReducer, createContext, useState } from "react";
 
 import { mdiCircle, mdiConsole } from "@mdi/js";
 import { WinState, Size, Position } from "../components/windowmanager";
 import { createWebApp } from "../components/webapps";
 
 // Helpers
-const genId = (l: {id: number}[]): number => {
+const genId = (l: { id: number }[]): number => {
   if (l.length === 0) {
     return 0;
   }
-  return Math.max(...l.map(o => o.id)) + 1;
+  return Math.max(...l.map((o) => o.id)) + 1;
 };
 
 const getAppIconPath = (name: string): string => {
@@ -26,7 +25,7 @@ const getAppIconPath = (name: string): string => {
 
 // Types
 export interface WinsContextType {
-  wins: WinState[],
+  wins: WinState[];
   // wins: Map<number, WinState>; // TODO: Should I just use an object?
   focused: number;
   spawn: (name: "term" | "dummy") => void; // TODO:
@@ -89,14 +88,16 @@ const windowsReducer = (
   action: WindowsReducerActions
 ): WinState[] => {
   const { id, type } = action;
-  const winState: WinState = prevState.filter(o => o.id === id)[0];
+  const winState: WinState = prevState.filter((o) => o.id === id)[0];
   switch (type) {
     case "spawn": {
       const newId = genId(prevState);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const name = action.name!;
       const app = createWebApp({ id: newId, name });
-      const newState = JSON.parse(JSON.stringify(initialWindowProps)) as WinState;
+      const newState = JSON.parse(
+        JSON.stringify(initialWindowProps)
+      ) as WinState;
       newState.app = app;
       newState.id = newId;
       newState.appType = name;
@@ -104,7 +105,7 @@ const windowsReducer = (
       return prevState.concat(newState);
     }
     case "kill": {
-      return prevState.filter(o => o.id !== id);
+      return prevState.filter((o) => o.id !== id);
     }
     case "focus": {
       /* eslint-disable */
@@ -114,41 +115,41 @@ const windowsReducer = (
         } else {
           s.zIndex = 999;
         }
-        return s
+        return s;
       });
       /* eslint-enable */
     }
     case "toggleMinimize": {
       winState.minimized = !winState.minimized;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     case "toggleMaximize": {
       winState.maximized = !winState.maximized;
       winState.needResize = true;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     case "setTitle": {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const title = action.title!;
       winState.title = title;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     case "setSize": {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const size = action.size!;
       winState.size = size;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     case "setNeedResize": {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       winState.needResize = action.needResize!;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     case "setPosition": {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const position = action.position!;
       winState.position = position;
-      return prevState.filter(s => s.id === id? winState : s);
+      return prevState.filter((s) => (s.id === id ? winState : s));
     }
     default: {
       throw new Error(`Unknown action: ${action}`);
@@ -157,10 +158,7 @@ const windowsReducer = (
 };
 
 export const WinsContextProvider: FC = ({ children }) => {
-  const [wins, dispatch] = useReducer(
-    windowsReducer,
-    [] as WinState[]
-  );
+  const [wins, dispatch] = useReducer(windowsReducer, [] as WinState[]);
 
   const [focused, setFocused] = useState(-1);
 
