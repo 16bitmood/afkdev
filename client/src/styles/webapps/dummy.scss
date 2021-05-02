@@ -1,4 +1,4 @@
-@import 'mixins';
+@import "mixins";
 
 .dummy {
   font-family: inherit;
@@ -27,7 +27,7 @@
     flex-direction: column;
     gap: 10px;
 
-    input[type='text'] {
+    input[type="text"] {
       font: inherit;
       font-size: 20px;
       transition: border ease-in-out 0.2s;

@@ -1,5 +1,5 @@
-@import 'mixins';
-@import 'variables';
+@use "mixins" as *;
+@use "variables" as *;
 
 .titlebar {
   font-family: inherit;
