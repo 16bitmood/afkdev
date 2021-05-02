@@ -78,7 +78,7 @@ export const WinsContext = createContext(initialWindowsContext);
 const initialWindowProps: Partial<WinState> = {
   position: { x: 0, y: 0 },
   size: { height: 400, width: 600 },
-  needResize: false,
+  needResize: true,
   minimized: false,
   maximized: false,
 };

@@ -36,7 +36,6 @@ export const logOut = async (): Promise<boolean> => {
 };
 
 export const isLoggedIn = async (): Promise<boolean> => {
-  return true;
   try {
     const res = await axios.get("/api/isLoggedIn");
     return res.data.result === "yes";

@@ -89,7 +89,8 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
   };
 
   const onSocketOpen = async () => {
-    await onTermResize(termAddonsRef.current.fit.proposeDimensions());
+    const {rows, cols} = termAddonsRef.current.fit.proposeDimensions();
+    await onTermResize({rows, cols:cols-1});
   };
 
   const onSocketMessage = (ev: MessageEvent) => {
@@ -129,12 +130,15 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
 
   useEffect(() => {
     if (needResize) {
-      termAddonsRef.current.fit.fit();
+      const {rows, cols} = termAddonsRef.current.fit.proposeDimensions();
+      // TODO: temp fix, fitaddon is not correctly calculating rows, maybe
+      // becuase it's not correctly identifying parent element
+      termRef.current.resize(cols, rows-1);
       setNeedResize(false);
     }
   }, [needResize]);
 
   return (
-    <div style={{ height: "100%", width: "100%" }} ref={termContainerRef} />
+    <div style={{ height: "100%", width: "100%", boxSizing: 'border-box'}} ref={termContainerRef} />
   );
 };
