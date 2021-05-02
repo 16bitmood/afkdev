@@ -9,7 +9,7 @@ const parseAppId = (u: string) => {
   const fullURL = new URL(u, "http://dummy");
   const appId = fullURL.searchParams.get("appId");
   return parseInt(appId as string, 10);
-}
+};
 
 const wss = new WebSocket.Server({
   clientTracking: false, // TODO: what is this?
@@ -39,4 +39,4 @@ export const handleWS = (server: Server): void => {
       }
     });
   });
-}
+};

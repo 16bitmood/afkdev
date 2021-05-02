@@ -43,9 +43,9 @@ export const logOut = (req: Request, res: Response): void => {
 
   req.session.destroy((err: Error) => {
     if (err) {
-      console.error(`${err  }Unimplemented`);
+      console.error(`${err}Unimplemented`);
     }
-    res.json({message: "OK"});
+    res.json({ message: "OK" });
   });
 };
 

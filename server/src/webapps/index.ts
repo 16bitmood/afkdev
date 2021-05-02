@@ -4,7 +4,7 @@ import { USERS } from "../config";
 
 // Add others as sum types
 export type WebApp = WebTerm;
-export type WebAppConfig = {cmd: string, args: string[]};
+export type WebAppConfig = { cmd: string; args: string[] };
 
 const getUserAppConfig = (username: string, app: "term"): WebAppConfig => {
   const [user] = USERS.filter((u) => u.username === username);
