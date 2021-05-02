@@ -119,46 +119,47 @@ const windowsReducer = (
       break;
     }
     case "toggleMinimize": {
-      const winProps = prevState.get(id!)!;
-      winProps.minimized = !winProps.minimized;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.minimized = !winState.minimized;
+      prevState.set(id!, winState);
       break;
     }
     case "toggleMaximize": {
-      const winProps = prevState.get(id!)!;
-      winProps.maximized = !winProps.maximized;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.maximized = !winState.maximized;
+      winState.needResize = true;
+      prevState.set(id!, winState);
       break;
     }
     case "setTitle": {
       const id = action.id;
       const title = action.title!;
-      const winProps = prevState.get(id!)!;
-      winProps.title = title;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.title = title;
+      prevState.set(id!, winState);
       break;
     }
     case "setSize": {
       const id = action.id;
       const size = action.size!;
-      const winProps = prevState.get(id!)!;
-      winProps.size = size;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.size = size;
+      prevState.set(id!, winState);
       break;
     }
     case "setNeedResize": {
       const id = action.id;
-      const winProps = prevState.get(id!)!;
-      winProps.needResize = action.needResize!;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.needResize = action.needResize!;
+      prevState.set(id!, winState);
       break;
     }
     case "setPosition": {
       const id = action.id;
       const position = action.position!;
-      const winProps = prevState.get(id!)!;
-      winProps.position = position;
-      prevState.set(id!, winProps);
+      const winState = prevState.get(id!)!;
+      winState.position = position;
+      prevState.set(id!, winState);
       break;
     }
     default: {
