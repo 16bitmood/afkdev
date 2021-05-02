@@ -2,18 +2,18 @@
 @use 'variables' as *;
 
 .taskbar {
-  font-family: inherit;
-  font-size: inherit;
+  font: inherit;
   position: fixed;
   top: 0;
   left: 0;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: $TASKBAR-HEIGHT;
   user-select: none;
-  color: $TASKBAR-FG;
   background-color: $TASKBAR-BG;
-  box-shadow: 1px 1px 100px 1px black;
+  color: $TASKBAR-FG;
+  box-shadow: -10px -10px 30px black;
 
   &-float-menu {
     position: fixed;
@@ -23,7 +23,6 @@
     display: flex;
     flex-direction: column;
     color: inherit;
-    background-color: lighten($TASKBAR-BG, 40%);
 
     &-button {
       @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);

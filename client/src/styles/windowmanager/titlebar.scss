@@ -3,19 +3,22 @@
 
 .titlebar {
   font-family: inherit;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: $TITLEBAR-HEIGHT;
   opacity: 0.8;
-  color: white;
+  color: $TITLEBAR-FG;
   background-color: $TITLEBAR-BG;
+  user-select: none;
 
   &-left {
     font: inherit;
     font-size: inherit;
-    justify-content: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-items: center;
     margin-left: 20px;
   }
 
