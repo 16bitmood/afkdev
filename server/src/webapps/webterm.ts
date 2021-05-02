@@ -34,13 +34,17 @@ interface WebTermCommand {
 
 export class WebTerm {
   public id: number;
+
   private initialData: string;
+
   private term: IPty;
 
   constructor(cmd: string, params: string[], termOptions: IPtyForkOptions) {
     this.initialData = "";
     this.term = spawn(cmd, params, termOptions);
-    this.term.onData((data) => (this.initialData += data));
+    this.term.onData((data) => {
+      this.initialData += data;
+    });
     this.id = this.term.pid;
 
     console.info(`Spawned: ${this.id}`);
@@ -50,7 +54,7 @@ export class WebTerm {
     this.term.resize(cols, rows);
   }
 
-  close() {
+  close(): void {
     this.term.kill();
   }
 
@@ -81,7 +85,7 @@ export class WebTerm {
       }
     });
 
-    ws.on("close", (_ev) => {
+    ws.on("close", () => {
       this.term.kill();
     });
   }

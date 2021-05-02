@@ -1,5 +1,6 @@
 import { SessionOptions } from "express-session";
 import { IN_PROD } from "./app";
+
 const HALF_HOUR = 1000 * 60 * 30;
 
 export const {

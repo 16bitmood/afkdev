@@ -1,8 +1,3 @@
-// Load Env Variables
-import dotenv from "dotenv";
-import path from "path";
-dotenv.config({ path: path.join(__dirname, "/../../.env.d/.env") });
-
 // External Dependencies
 import express from "express";
 import http from "http";
@@ -14,7 +9,6 @@ import {
   APP_PORT,
   APP_ORIGIN,
   APP_SERVER_OPTIONS,
-  APP_PROTOCOL,
 } from "./config";
 
 import { router } from "./routes";
@@ -38,7 +32,7 @@ app.use(router);
 
 let server: http.Server;
 // Server
-if (APP_PROTOCOL === "https") {
+if (APP_SERVER_OPTIONS) {
   server = https.createServer(APP_SERVER_OPTIONS, app);
 } else {
   server = http.createServer(app);

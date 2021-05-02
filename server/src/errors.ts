@@ -1,3 +1,4 @@
+/* eslint-disable */
 abstract class HttpError extends Error {
   public status!: number;
 }

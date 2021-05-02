@@ -5,10 +5,10 @@ import type { Response } from "express";
 import { sessionParser, getSessionApp } from "./session";
 import { Unauthorized } from "./errors";
 
-function parseAppId(u: string) {
+const parseAppId = (u: string) => {
   const fullURL = new URL(u, "http://dummy");
   const appId = fullURL.searchParams.get("appId");
-  return parseInt(appId as string);
+  return parseInt(appId as string, 10);
 }
 
 const wss = new WebSocket.Server({
@@ -17,7 +17,7 @@ const wss = new WebSocket.Server({
   path: "/_connect",
 });
 
-export function handleWS(server: Server) {
+export const handleWS = (server: Server): void => {
   server.on("upgrade", (req, socket, head) => {
     sessionParser(req, {} as Response, () => {
       try {
@@ -35,7 +35,6 @@ export function handleWS(server: Server) {
         } else {
           socket.write("HTTP/1.1 400 Bad Request\r\n\r\n");
           socket.destroy();
-          return;
         }
       }
     });

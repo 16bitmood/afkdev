@@ -4,16 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "check": "npm run eslint --fix && npm run prettier && npm run build",
+    "check": "npm run eslint && npm run prettier && npm run build",
     "build": "tsc",
-    "eslint": "eslint . --ext .ts",
+    "eslint": "eslint . --ext .ts --fix",
     "prettier": "prettier --write .",
     "dev": "ts-node-dev --transpile-only --no-notify src"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-cors": "0.0.3",
     "express-session": "^1.17.1",
     "node-pty": "^0.10.1",
     "ws": "^7.4.5"
@@ -32,7 +31,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
     "prettier": "^2.2.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"

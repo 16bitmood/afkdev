@@ -2,23 +2,21 @@ import { Router } from "express";
 import crypto from "crypto";
 import { USERS } from "../config";
 import { isLoggedIn, logIn, logOut } from "../session";
-import { BadRequest, Unauthorized } from "../errors";
+import { BadRequest } from "../errors";
 
 const router = Router();
 
-const hashText = (text: string): string => {
-  return crypto.createHash("sha256").update(text).digest("hex");
-};
+const hashText = (text: string): string =>
+  crypto.createHash("sha256").update(text).digest("hex");
 
-function isVerified(u: string, p: string): boolean {
+const isVerified = (u: string, p: string): boolean => {
   const pHash = hashText(p);
   const matched = USERS.filter((userdat) => userdat.username === u)[0];
   if (!matched) {
     return false;
-  } else {
-    return pHash === matched.hashedPassword;
   }
-}
+  return pHash === matched.hashedPassword;
+};
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -37,9 +35,8 @@ router.post("/logout", (req, res) => {
   if (isLoggedIn(req)) {
     logOut(req, res);
     return res.sendStatus(200);
-  } else {
-    throw new BadRequest("Not Logged In!");
   }
+  throw new BadRequest("Not Logged In!");
 });
 
 router.get("/isLoggedIn", (req, res) => {

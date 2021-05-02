@@ -1,25 +1,22 @@
 import { Router } from "express";
 
-import { isLoggedIn } from "../session";
+import { isLoggedIn, setSessionApp } from "../session";
 import { BadRequest } from "../errors";
-
 import { makeApp } from "../webapps";
-
-import { setSessionApp } from "../session";
 
 const router = Router();
 
 router.get("/manage/create/:appName", (req, res) => {
-  if (!isLoggedIn(req)) {
+  if (!isLoggedIn(req) || !req.session.username) {
+    // TODO: session type is messed up
     throw new BadRequest("Client must be logged in to access /manage");
   }
+  const { appName } = req.params;
+  const app = makeApp(appName, req.session.username);
+  const { id } = app;
+  setSessionApp(req, id, app);
 
-  const appName = req.params.appName;
-  const app = makeApp(appName, req.session.username!);
-  const appId = app.id;
-  setSessionApp(req, app.id, app);
-
-  res.json({ appId });
+  res.json({ appId: id });
 });
 
 export { router as manage };

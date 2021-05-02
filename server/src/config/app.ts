@@ -14,11 +14,10 @@ export const {
 export const APP_ORIGIN = `${APP_PROTOCOL}://${APP_HOSTNAME}:${APP_PORT}`;
 export const IN_PROD = NODE_ENV === "production";
 
-export let APP_SERVER_OPTIONS: ServerOptions;
-
-if (APP_PROTOCOL === "https") {
-  APP_SERVER_OPTIONS = {
-    key: fs.readFileSync(path.join(PROJECT_ROOT, "/.env.d/key.pem")),
-    cert: fs.readFileSync(path.join(PROJECT_ROOT, "/.env.d/cert.pem")),
-  };
-}
+export const APP_SERVER_OPTIONS: ServerOptions | null =
+  APP_PROTOCOL === "https"
+    ? {
+        key: fs.readFileSync(path.join(PROJECT_ROOT, "/.env.d/key.pem")),
+        cert: fs.readFileSync(path.join(PROJECT_ROOT, "/.env.d/cert.pem")),
+      }
+    : null;

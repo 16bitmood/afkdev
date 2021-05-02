@@ -21,22 +21,21 @@ export const sessionParser = session(SESSION_OPTIONS);
 export const sessionApps = new Map<string, Map<number, WebApp>>();
 
 // Functions
-export function isLoggedIn(req: Request): boolean {
-  return !!req.session.username;
-}
+export const isLoggedIn = (req: Request): boolean => !!req.session.username;
 
-export function logIn(req: Request, username: string): void {
+export const logIn = (req: Request, username: string): void => {
   req.session.username = username;
   req.session.loggedInAt = Date.now();
   req.session.ip = req.ip;
 
   sessionApps.set(req.sessionID, new Map());
-}
+};
 
-export function logOut(req: Request, _res: Response): void {
+export const logOut = (req: Request, res: Response): void => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }
+
   // eslint-disable-next-line
   const apps = sessionApps.get(req.sessionID)!;
   apps.forEach((app) => app.close());
@@ -44,12 +43,13 @@ export function logOut(req: Request, _res: Response): void {
 
   req.session.destroy((err: Error) => {
     if (err) {
-      console.error("Unimplemented");
+      console.error(`${err  }Unimplemented`);
     }
+    res.json({message: "OK"});
   });
-}
+};
 
-export function getSessionApp(req: Request, appId: number): WebApp {
+export const getSessionApp = (req: Request, appId: number): WebApp => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }
@@ -62,27 +62,31 @@ export function getSessionApp(req: Request, appId: number): WebApp {
     throw new BadRequest("App does not exist");
   }
   return app;
-}
+};
 
-export function setSessionApp(req: Request, appId: number, app: WebApp): void {
+export const setSessionApp = (
+  req: Request,
+  appId: number,
+  app: WebApp
+): void => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }
 
-  sessionApps.get(req.sessionID)!.set(appId, app);
-}
+  sessionApps.get(req.sessionID)?.set(appId, app);
+};
 
-export function deleteSessionApp(req: Request, appId: number): void {
+export const deleteSessionApp = (req: Request, appId: number): void => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }
 
   // eslint-disable-next-line
-  const app = sessionApps.get(req.sessionID)!.get(appId);
+  const app = sessionApps.get(req.sessionID)?.get(appId);
   if (app) {
     app.close();
-    sessionApps.get(req.sessionID)!.delete(appId);
+    sessionApps.get(req.sessionID)?.delete(appId);
   } else {
     throw new BadRequest("App does not exist");
   }
-}
+};
