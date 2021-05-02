@@ -7,7 +7,6 @@
     "buildServer": "cd server && npm install && npm run check",
     "dev": "npm run buildServer && npm run buildClient && cd server && npm run dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Gurdit Singh Siyan",
+  "license": "MIT"
 }
