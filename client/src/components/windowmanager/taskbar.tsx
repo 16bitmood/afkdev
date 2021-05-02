@@ -14,13 +14,12 @@ const FloatMenu: FC = () => {
   const { spawn } = useContext(WinsContext);
   const Entries = "taskbar-float-menu-button";
 
-  const FloatButton = ({ onClick, text }: any) => {
-    return (
-      <button onClick={onClick} className={Entries}>
+  // eslint-disable-next-line
+  const FloatButton = ({ onClick, text }: any) => (
+      <button type='button' onClick={onClick} className={Entries}>
         {text}
       </button>
     );
-  };
   return (
     <div className="taskbar-float-menu">
       <FloatButton onClick={() => spawn("term")} text="Term" />
@@ -34,7 +33,7 @@ const MenuButton: FC = () => {
   const { wins } = useContext(WinsContext);
   const [menuOpened, setMenuOpened] = useState(false);
   const onClick = () => {
-    setMenuOpened((menuOpened) => !menuOpened);
+    setMenuOpened(mo => !mo);
   };
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const MenuButton: FC = () => {
 
   return (
     <>
-      <button onClick={onClick} className={className}>
+      <button type='button' onClick={onClick} className={className}>
         <Icon size="30px" path={mdiCubeOutline} />
       </button>
       {menuOpened ? <FloatMenu /> : <></>}
@@ -59,6 +58,7 @@ const WindowIcons: FC = () => {
     <>
       {wins.map((win) => (
         <button
+          type='button'
           className={win.id === focused ? "taskbar-app-focused" : "taskbar-app"}
           key={win.id}
           onClick={() => toggleMinimize(win.id)}
@@ -70,8 +70,7 @@ const WindowIcons: FC = () => {
   );
 };
 
-export const Taskbar: FC = () => {
-  return (
+export const Taskbar: FC = () => (
     <div className="taskbar">
       <MenuButton />
       <WindowIcons />
@@ -81,4 +80,3 @@ export const Taskbar: FC = () => {
       </div>
     </div>
   );
-};

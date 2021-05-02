@@ -11,8 +11,7 @@ export const LoginPage: FC = () => {
   const [incorrectAttempt, setIncorrectAttempt] = useState(false);
   const [attempts, setAttempts] = useState(0);
 
-  const handleSubmit = async (ev: any) => {
-    ev.preventDefault();
+  const handleSubmit = async () => {
     const r = await sessionLogin(username, password);
     if (!r) {
       setIncorrectAttempt(true);
@@ -24,6 +23,7 @@ export const LoginPage: FC = () => {
 
   return (
     <div className="wrapper-login-form">
+      {/* eslint-disable-next-line */}
       <header onClick={headerClick}>&lt;AFKDEV&gt;</header>
       <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
         <input
@@ -43,7 +43,7 @@ export const LoginPage: FC = () => {
           <></>
         )}
       </form>
-      <button>about</button>
+      <button type='button'>about</button>
     </div>
   );
 };

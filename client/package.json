@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "watch": "cra-build-watch",
-    "check": "npm run eslint -- --fix && npm run prettier && npm run stylelint && npm run build",
-    "eslint": "eslint src",
+    "check": "npm run eslint && npm run prettier && npm run stylelint && npm run build",
+    "eslint": "eslint src --fix",
     "prettier": "prettier --write .",
     "stylelint": "stylelint src/styles",
     "start": "export SASS_PATH=src/styles && react-scripts start",

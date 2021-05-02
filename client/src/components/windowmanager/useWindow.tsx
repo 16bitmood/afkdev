@@ -1,9 +1,10 @@
+import { useContext } from "react";
 import type { Size, Position } from "./window";
 
-import { useContext } from "react";
 import { WinsContext } from "../../context/windows";
 
-export const useWindow = (id: number) => {
+// eslint-disable-next-line
+export const useWindow = (id: number): any => {
   const {
     wins,
     kill,
@@ -15,7 +16,7 @@ export const useWindow = (id: number) => {
     setPosition,
     setTitle,
   } = useContext(WinsContext);
-  const winState = wins.filter(o => o.id === id)[0]!;
+  const [ winState ] = wins.filter(o => o.id === id);
   return {
     ...winState,
     onFocus: () => focus(id),

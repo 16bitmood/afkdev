@@ -1,0 +1,67 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true,
+        "jest": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb",
+        "airbnb-typescript",
+        "airbnb/hooks",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "plugin:jest/recommended",
+        "plugin:react/recommended",
+        "prettier"
+    ],
+    "globals": {
+        "NodeJS": "readonly",
+        "React": "readonly"
+    },
+    "ignorePatterns": [
+        "/*.config.js",
+        "/setupTests.js"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "react-hooks",
+        "react"
+    ],
+    "rules": {
+        "import/no-cycle": "off",
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/no-unused-vars": ["warn",{ "argsIgnorePattern": "^_" } ],
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".tsx"
+                ]
+            }
+        ],
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        },
+        "react": {
+            "version": "detect"
+        }
+    }
+}

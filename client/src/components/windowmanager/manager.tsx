@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 
 import { WinsContext } from "../../context/windows";
 import { Taskbar } from "./taskbar";
 import { Win } from "./window";
 
-export const WindowManager = () => {
+export const WindowManager: FC = () => {
   const { wins } = useContext(WinsContext);
   return (
     <div

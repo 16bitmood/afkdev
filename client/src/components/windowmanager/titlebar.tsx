@@ -20,8 +20,7 @@ export const TitleBar: FC<TitleBarProps> = ({
   onMinimize,
   onMaximize,
   onExit,
-}) => {
-  return (
+}) => (
     <div className="titlebar">
       <div className="titlebar-left">
         <Icon
@@ -33,16 +32,15 @@ export const TitleBar: FC<TitleBarProps> = ({
       </div>
       <div className="titlebar-center">{title}</div>
       <div className="titlebar-right">
-        <button onClick={onMinimize} className="titlebar-right-button">
+        <button type='button' onClick={onMinimize} className="titlebar-right-button">
           <Icon size="16px" path={mdiWindowMinimize} />
         </button>
-        <button onClick={onMaximize} className="titlebar-right-button">
+        <button type='button' onClick={onMaximize} className="titlebar-right-button">
           <Icon size="16px" path={mdiRectangleOutline} />
         </button>
-        <button onClick={onExit} className="titlebar-right-button-close">
+        <button type='button' onClick={onExit} className="titlebar-right-button-close">
           <Icon size="16px" path={mdiClose} />
         </button>
       </div>
     </div>
   );
-};

@@ -19,13 +19,11 @@ export const Dummy: FC<WebAppOptions> = (props) => {
   return (
     <div className="dummy">
       <form onSubmit={handleSubmit}>
-        <label>
-          <h1> Change Title </h1>
-          <input type="text" onChange={(ev) => setInput(ev.target.value)} />
-        </label>
+        <h1> Change Title </h1>
+        <input type="text" onChange={(ev) => setInput(ev.target.value)} />
         <button type="submit">Apply Changes</button>
       </form>
-      <button onClick={onExit}>Close App</button>
+      <button type="button" onClick={onExit}>Close App</button>
     </div>
   );
 };

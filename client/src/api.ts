@@ -1,4 +1,8 @@
+/* eslint-disable max-classes-per-file */
 import axios from "axios";
+
+// Types
+export type Stats = {ip: string};
 
 // Errors
 export class Unauthorized extends Error {
@@ -53,7 +57,7 @@ export const createApp = async (appName: string): Promise<number | null> => {
   }
 };
 
-export const getStats = async () => {
+export const getStats = async (): Promise<Stats> => {
   try {
     const res = await axios.get("/api/stats");
     return res.data;
@@ -62,13 +66,13 @@ export const getStats = async () => {
   }
 };
 
-export const connectWS = (appId: number) => {
+export const connectWS = (appId: number): WebSocket => {
   const makeWsUrl = (s: string): string => {
     const l = window.location;
     return (
       (l.protocol === "https:" ? "wss://" : "ws://") +
       l.hostname +
-      (l.port !== "80" && l.port !== "443" ? ":" + l.port : "") +
+      (l.port !== "80" && l.port !== "443" ? `:${  l.port}` : "") +
       l.pathname +
       s
     );

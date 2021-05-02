@@ -1,9 +1,9 @@
-import { FC, useReducer } from "react";
-import { createContext, useState } from "react";
+import { FC, useReducer , createContext, useState } from "react";
 
+
+import { mdiCircle, mdiConsole } from "@mdi/js";
 import { WinState, Size, Position } from "../components/windowmanager";
 import { createWebApp } from "../components/webapps";
-import { mdiCircle, mdiConsole } from "@mdi/js";
 
 // Helpers
 const genId = (l: {id: number}[]): number => {
@@ -40,6 +40,7 @@ export interface WinsContextType {
   setNeedResize: (id: number, b: boolean) => void;
 }
 
+// TODO: Refactor into sum type
 type WindowsReducerActions = {
   type:
     | "spawn"
@@ -91,12 +92,13 @@ const windowsReducer = (
   const winState: WinState = prevState.filter(o => o.id === id)[0];
   switch (type) {
     case "spawn": {
-      const id = genId(prevState);
+      const newId = genId(prevState);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const name = action.name!;
-      const app = createWebApp({ id, name });
+      const app = createWebApp({ id: newId, name });
       const newState = JSON.parse(JSON.stringify(initialWindowProps)) as WinState;
       newState.app = app;
-      newState.id = id;
+      newState.id = newId;
       newState.appType = name;
       newState.appIconPath = getAppIconPath(name);
       return prevState.concat(newState);
@@ -105,6 +107,7 @@ const windowsReducer = (
       return prevState.filter(o => o.id !== id);
     }
     case "focus": {
+      /* eslint-disable */
       return prevState.filter((s) => {
         if (s.id !== id) {
           s.zIndex = s.id;
@@ -113,6 +116,7 @@ const windowsReducer = (
         }
         return s
       });
+      /* eslint-enable */
     }
     case "toggleMinimize": {
       winState.minimized = !winState.minimized;
@@ -124,22 +128,24 @@ const windowsReducer = (
       return prevState.filter(s => s.id === id? winState : s);
     }
     case "setTitle": {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const title = action.title!;
       winState.title = title;
       return prevState.filter(s => s.id === id? winState : s);
     }
     case "setSize": {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const size = action.size!;
       winState.size = size;
       return prevState.filter(s => s.id === id? winState : s);
     }
     case "setNeedResize": {
-      const id = action.id;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       winState.needResize = action.needResize!;
       return prevState.filter(s => s.id === id? winState : s);
     }
     case "setPosition": {
-      const id = action.id;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const position = action.position!;
       winState.position = position;
       return prevState.filter(s => s.id === id? winState : s);
@@ -159,7 +165,7 @@ export const WinsContextProvider: FC = ({ children }) => {
   const [focused, setFocused] = useState(-1);
 
   const ctx: WinsContextType = {
-    wins: wins,
+    wins,
     focused,
     spawn: (name) => dispatch({ type: "spawn", name }),
     kill: (id) => dispatch({ type: "kill", id }),

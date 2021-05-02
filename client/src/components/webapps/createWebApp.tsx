@@ -25,10 +25,10 @@ export const termScheme: ITheme = {
   brightWhite: "#f3f4f5",
 };
 
-export interface WebAppOptions {
+export type WebAppOptions = {
   id: number;
   name: "term" | "dummy";
-  appOptions?: any;
+  appOptions?: ITerminalOptions | null;
 }
 
 const initialAppOptions = {
@@ -37,12 +37,12 @@ const initialAppOptions = {
     fontSize: 16,
     theme: termScheme,
   } as ITerminalOptions,
-  dummy: {},
+  dummy: null,
 };
 
 export const createWebApp = (options: WebAppOptions): JSX.Element => {
-  console.log(options.appOptions);
   if (!options.appOptions || options.appOptions === {}) {
+    // eslint-disable-next-line no-param-reassign
     options.appOptions = initialAppOptions[options.name];
   }
 

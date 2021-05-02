@@ -18,27 +18,50 @@ enum CMD {
   SERVER_DATA = "0",
 }
 
-export const WebTerm: React.FC<WebAppOptions> = (props) => {
-  const { needResize, setNeedResize, onExit } = useWindow(props.id);
+export const WebTerm: React.FC<WebAppOptions> = ({id, appOptions}) => {
+  const { needResize, setNeedResize, onExit } = useWindow(id);
 
   // Refs will remain the same on re-renders
   const termAddonsRef = useRef({
     fit: new FitAddon(),
     webLinks: new WebLinksAddon(),
+    // eslint-disable-next-line
     webgl: false && isWebGL2Available() ? new WebglAddon() : null, // TODO: Add an options app;
   });
-  const termRef = useRef(new Terminal(props.appOptions));
+  const termRef = useRef(new Terminal(appOptions || {}))
   const termContainerRef: MutableRefObject<HTMLDivElement | null> = useRef(
     null
   );
   const wsRef: MutableRefObject<WebSocket | null> = useRef(null);
   const pidRef: MutableRefObject<number | null> = useRef(null);
 
+  const onTermData = async (data: string) => {
+    const socket = wsRef.current;
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(CMD.CLIENT_DATA + data);
+    }
+  };
+
+  const onTermResize = async (size: { cols: number; rows: number }) => {
+    const socket = wsRef.current;
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(
+        CMD.CLIENT_UPDATE +
+          JSON.stringify({
+            option: "resize",
+            cols: size.cols,
+            rows: size.rows,
+          })
+      );
+    }
+  };
+
   const initializeTerm = () => {
     const { fit, webLinks, webgl } = termAddonsRef.current;
     const term = termRef.current;
     term.loadAddon(fit);
     term.loadAddon(webLinks);
+    // eslint-disable-next-line
     term.onTitleChange((title) => console.log("term title changed")); // TODO
     term.onData(onTermData);
     term.onResize(onTermResize);
@@ -58,35 +81,9 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
       if (webgl) {
         term.loadAddon(webgl);
       }
-    } else {
-      console.error("term ref is undefined");
     }
   };
 
-  const onTermResize = async (size: { cols: number; rows: number }) => {
-    const socket = wsRef.current;
-    if (!socket) {
-      return;
-    } else if (socket.readyState === WebSocket.OPEN) {
-      socket.send(
-        CMD.CLIENT_UPDATE +
-          JSON.stringify({
-            option: "resize",
-            cols: size.cols,
-            rows: size.rows,
-          })
-      );
-    }
-  };
-
-  const onTermData = async (data: string) => {
-    const socket = wsRef.current;
-    if (!socket) {
-      return;
-    } else if (socket.readyState === WebSocket.OPEN) {
-      socket.send(CMD.CLIENT_DATA + data);
-    }
-  };
 
   const onSocketOpen = async () => {
     const {rows, cols} = termAddonsRef.current.fit.proposeDimensions();
@@ -101,7 +98,7 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
         termRef.current.write(data);
         break;
       default:
-        console.error("Invalid Command!");
+        throw new Error("Invalid Command!");
     }
   };
 
@@ -115,11 +112,15 @@ export const WebTerm: React.FC<WebAppOptions> = (props) => {
 
   const connectWebTerm = async () => {
     pidRef.current = await createApp("term");
-    wsRef.current = connectWS(pidRef.current!);
-    wsRef.current.onopen = onSocketOpen;
-    wsRef.current.onmessage = onSocketMessage;
-    wsRef.current.onerror = onClose;
-    wsRef.current.onclose = onClose;
+    if (pidRef.current) {
+      wsRef.current = connectWS(pidRef.current);
+      wsRef.current.onopen = onSocketOpen;
+      wsRef.current.onmessage = onSocketMessage;
+      wsRef.current.onerror = onClose;
+      wsRef.current.onclose = onClose;
+    } else {
+      throw new Error('App was not created!');
+    }
   };
 
   useEffect(() => {
