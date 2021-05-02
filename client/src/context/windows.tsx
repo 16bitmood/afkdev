@@ -6,11 +6,11 @@ import { createWebApp } from "../components/webapps";
 import { mdiCircle, mdiConsole } from "@mdi/js";
 
 // Helpers
-const genId = (m: Map<number, any>): number => {
-  if (m.size === 0) {
+const genId = (l: {id: number}[]): number => {
+  if (l.length === 0) {
     return 0;
   }
-  return Math.max(...m.keys()) + 1;
+  return Math.max(...l.map(o => o.id)) + 1;
 };
 
 const getAppIconPath = (name: string): string => {
@@ -26,7 +26,8 @@ const getAppIconPath = (name: string): string => {
 
 // Types
 export interface WinsContextType {
-  wins: Map<number, WinState>; // TODO: Should I just use an object?
+  wins: WinState[],
+  // wins: Map<number, WinState>; // TODO: Should I just use an object?
   focused: number;
   spawn: (name: "term" | "dummy") => void; // TODO:
   kill: (id: number) => void;
@@ -59,7 +60,7 @@ type WindowsReducerActions = {
 };
 
 export const initialWindowsContext: WinsContextType = {
-  wins: new Map(),
+  wins: [],
   focused: -1,
   spawn: () => {},
   kill: () => {},
@@ -83,96 +84,76 @@ const initialWindowProps: Partial<WinState> = {
 };
 
 const windowsReducer = (
-  prevState: Map<number, WinState>,
+  prevState: WinState[],
   action: WindowsReducerActions
-): Map<number, WinState> => {
+): WinState[] => {
   const { id, type } = action;
+  const winState: WinState = prevState.filter(o => o.id === id)[0];
   switch (type) {
     case "spawn": {
       const id = genId(prevState);
       const name = action.name!;
       const app = createWebApp({ id, name });
-      const props = JSON.parse(JSON.stringify(initialWindowProps)) as WinState;
-      props.app = app;
-      props.id = id;
-      props.appType = name;
-      props.appIconPath = getAppIconPath(name);
-      prevState.set(id, props);
-      break;
+      const newState = JSON.parse(JSON.stringify(initialWindowProps)) as WinState;
+      newState.app = app;
+      newState.id = id;
+      newState.appType = name;
+      newState.appIconPath = getAppIconPath(name);
+      return prevState.concat(newState);
     }
     case "kill": {
-      prevState.delete(id!);
-      break;
+      return prevState.filter(o => o.id !== id);
     }
     case "focus": {
-      const winState = prevState.get(id!)!;
-      winState.zIndex = 999;
-      // hacky way
-      prevState = new Map(
-        [...prevState.values()].map((winState) => {
-          if (winState.id !== id) {
-            winState.zIndex = winState.id;
-          }
-          return [winState.id, winState];
-        })
-      );
-      break;
+      return prevState.filter((s) => {
+        if (s.id !== id) {
+          s.zIndex = s.id;
+        } else {
+          s.zIndex = 999;
+        }
+        return s
+      });
     }
     case "toggleMinimize": {
-      const winState = prevState.get(id!)!;
       winState.minimized = !winState.minimized;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     case "toggleMaximize": {
-      const winState = prevState.get(id!)!;
       winState.maximized = !winState.maximized;
       winState.needResize = true;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     case "setTitle": {
-      const id = action.id;
       const title = action.title!;
-      const winState = prevState.get(id!)!;
       winState.title = title;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     case "setSize": {
-      const id = action.id;
       const size = action.size!;
-      const winState = prevState.get(id!)!;
       winState.size = size;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     case "setNeedResize": {
       const id = action.id;
-      const winState = prevState.get(id!)!;
       winState.needResize = action.needResize!;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     case "setPosition": {
       const id = action.id;
       const position = action.position!;
-      const winState = prevState.get(id!)!;
       winState.position = position;
-      prevState.set(id!, winState);
-      break;
+      return prevState.filter(s => s.id === id? winState : s);
     }
     default: {
-      console.error("Unknown action:", action);
+      throw new Error(`Unknown action: ${action}`);
     }
   }
-  return new Map(prevState);
 };
 
 export const WinsContextProvider: FC = ({ children }) => {
   const [wins, dispatch] = useReducer(
     windowsReducer,
-    new Map<number, WinState>()
+    [] as WinState[]
   );
 
   const [focused, setFocused] = useState(-1);

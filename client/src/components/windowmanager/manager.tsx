@@ -6,7 +6,6 @@ import { Win } from "./window";
 
 export const WindowManager = () => {
   const { wins } = useContext(WinsContext);
-  const ids = [...wins.keys()];
   return (
     <div
       style={{
@@ -17,7 +16,7 @@ export const WindowManager = () => {
       }}
     >
       <Taskbar />
-      {ids.map((id) => (
+      {wins.map(o => o.id).map((id) => (
         <Win key={id} id={id} />
       ))}
     </div>

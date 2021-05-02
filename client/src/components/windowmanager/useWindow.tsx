@@ -15,9 +15,9 @@ export const useWindow = (id: number) => {
     setPosition,
     setTitle,
   } = useContext(WinsContext);
-  const winProps = wins.get(id)!;
+  const winState = wins.filter(o => o.id === id)[0]!;
   return {
-    ...winProps,
+    ...winState,
     onFocus: () => focus(id),
     onExit: () => kill(id),
     toggleMaximize: () => toggleMaximize(id),

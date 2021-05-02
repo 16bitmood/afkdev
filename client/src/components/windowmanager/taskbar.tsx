@@ -57,7 +57,7 @@ const WindowIcons: FC = () => {
   const { wins, toggleMinimize, focused } = useContext(WinsContext);
   return (
     <>
-      {[...wins.values()].map((win) => (
+      {wins.map((win) => (
         <button
           className={win.id === focused ? "taskbar-app-focused" : "taskbar-app"}
           key={win.id}
