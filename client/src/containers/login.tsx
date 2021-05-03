@@ -2,7 +2,7 @@ import "../styles/login.scss";
 
 import { FC, FormEventHandler, useContext, useState } from "react";
 
-import { SessionContext } from "../context/session";
+import { SessionContext } from "../contexts";
 
 export const LoginPage: FC = () => {
   const { sessionLogin } = useContext(SessionContext);

@@ -3,9 +3,7 @@ import "../../styles/windowmanager/dropdownmenu.scss";
 import { FC, useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import { SessionContext } from "../../context/session";
-import { TaskbarContext } from "../../context/taskbar";
-import { WinsContext } from "../../context/windows";
+import { SessionContext, TaskbarContext, WinsContext } from "../../contexts";
 
 export const DropdownMenu: FC = () => {
   const { sessionLogout } = useContext(SessionContext);

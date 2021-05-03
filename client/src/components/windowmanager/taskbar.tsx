@@ -6,8 +6,7 @@ import { mdiCubeOutline } from "@mdi/js";
 
 import { Clock } from "../clock";
 import { Stats } from "../stats";
-import { WinsContext } from "../../context/windows";
-import { TaskbarContext } from "../../context/taskbar";
+import { WinsContext, TaskbarContext } from "../../contexts";
 
 const MenuButton: FC = () => {
   const { showMenu, toggleShowMenu } = useContext(TaskbarContext);

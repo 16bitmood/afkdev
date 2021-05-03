@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import type { Size, Position } from "./window";
 
-import { WinsContext } from "../../context/windows";
+import { WinsContext } from "../../contexts";
 
 // eslint-disable-next-line
 export const useWindow = (id: number): any => {

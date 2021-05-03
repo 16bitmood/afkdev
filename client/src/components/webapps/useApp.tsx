@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { WinsContext } from "../../context/windows";
+import { WinsContext } from "../../contexts";
 
 export type AppContext = {
   onExit: () => void;

@@ -1,7 +1,6 @@
 import { FC, useContext } from "react";
 
-import { WinsContext } from "../../context/windows";
-import { TaskbarContextProvider } from "../../context/taskbar";
+import { WinsContext, TaskbarContextProvider } from "../../contexts";
 import { Taskbar } from "./taskbar";
 import { Win } from "./window";
 import { DropdownMenu } from "./dropdownmenu";
