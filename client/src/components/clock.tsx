@@ -7,5 +7,5 @@ export const Clock: FC = () => {
   useEffect(() => {
     setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
   }, []);
-  return <span className="taskbar-element">{time}</span>;
+  return <span className="taskbar-end-element">{time}</span>;
 };

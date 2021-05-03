@@ -11,14 +11,10 @@
   background-color: lighten(black, 15%);
 
   button {
-    @include minimal-button(darken(red, 10%), white, 0%, 100px);
+    @include minimal-button(darken(red, 10%), white, darken, 0%, 100px);
 
     height: 45px;
     margin: 10px;
-
-    &:hover {
-      background-color: darken(red, 20%);
-    }
   }
 
   form {

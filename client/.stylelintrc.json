@@ -4,7 +4,7 @@
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": ["use", "mixin", "import", "include"]
+        "ignoreAtRules": ["use", "mixin", "import", "include", "if", "else"]
       }
     ]
   }

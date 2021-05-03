@@ -31,7 +31,7 @@ export const logIn = (req: Request, username: string): void => {
   sessionApps.set(req.sessionID, new Map());
 };
 
-export const logOut = (req: Request, res: Response): void => {
+export const logOut = (req: Request, _res: Response): void => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
   }

@@ -17,41 +17,32 @@
   color: $TASKBAR-FG;
   box-shadow: -10px -10px 30px black;
 
-  &-float-menu {
-    position: fixed;
-    z-index: 10000;
-    top: 40px;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    color: inherit;
-
-    &-button {
-      @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 100px);
-
-      font-size: 16px;
-      padding: 10px;
-    }
-  }
-
   &-menu-button {
-    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 100%, 100px);
+    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, lighten, 0, 100px);
+
+    transition: all 200ms ease-in-out;
+    border-left: 0 solid $ACCENT-COLOR;
 
     &:hover {
+      border-left: 10px solid $ACCENT-COLOR;
       color: $ACCENT-COLOR;
     }
 
     &-active {
-      @include minimal-button(darken($TASKBAR-FG, 10%), $TASKBAR-BG, 0%, 100px);
+      @include minimal-button($TASKBAR-FG, $TASKBAR-BG, darken, 10%, 100px);
+
+      border-left: 10px solid $ACCENT-COLOR;
+      transition: all 200ms ease-in-out;
 
       &:hover {
-        color: $ACCENT-COLOR;
+        background-color: $ACCENT-COLOR;
+        color: $BG;
       }
     }
   }
 
   &-app {
-    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 30%, 50px);
+    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, lighten, 30%, 60px);
 
     &:hover {
       color: $ACCENT-COLOR;
@@ -59,18 +50,29 @@
   }
 
   &-app-focused {
-    @include minimal-button(lighten($TASKBAR-BG, 20%), $TASKBAR-FG, 30%, 60px);
+    @include minimal-button(
+      lighten($TASKBAR-BG, 20%),
+      $TASKBAR-FG,
+      lighten,
+      30%,
+      60px
+    );
   }
 
   &-end {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
     margin-left: auto;
-  }
 
-  &-element {
-    @include minimal-button($TASKBAR-BG, $TASKBAR-FG, 00%, 150px);
+    &-element {
+      box-sizing: border-box;
+      padding: 15px;
+      transition: all ease-in-out 0.2s;
 
-    &:hover {
-      color: $ACCENT-COLOR;
+      &:hover {
+        color: $ACCENT-COLOR;
+      }
     }
   }
 }

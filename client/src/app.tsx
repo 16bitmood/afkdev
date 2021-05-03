@@ -23,7 +23,6 @@ const HandlePages: FC = () => {
       } else {
         setCurrentPage(2);
       }
-      console.log(isLoggedIn, "changed");
     };
     checkLogin();
   }, [isLoggedIn]);

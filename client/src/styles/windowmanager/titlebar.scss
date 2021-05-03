@@ -39,14 +39,10 @@
     border: none;
 
     &-button {
-      @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, 30%, 50px);
+      @include minimal-button($TITLEBAR-BG, $TITLEBAR-FG, lighten, 30%, 50px);
 
       &-close {
-        @include minimal-button(red, white, 30%, 50px);
-
-        &:hover {
-          background-color: darken(red, 20%);
-        }
+        @include minimal-button(red, white, darken, 20%, 50px);
       }
     }
   }

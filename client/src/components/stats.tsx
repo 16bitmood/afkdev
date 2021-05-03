@@ -10,5 +10,5 @@ export const Stats: FC = () => {
     return () => clearInterval(i);
   }, []);
 
-  return <span className="taskbar-element">IP: {stats.ip}</span>;
+  return <span className="taskbar-end-element">IP: {stats.ip}</span>;
 };

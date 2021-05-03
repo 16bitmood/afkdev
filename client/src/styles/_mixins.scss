@@ -1,11 +1,11 @@
 @use "colors" as *;
 
-@mixin minimal-button($bg, $fg, $lighten-amount, $width) {
+@mixin minimal-button($bg, $fg, $change-type, $change-amount, $width) {
   background-color: $bg;
   color: $fg;
+  width: $width;
   font: inherit;
   overflow: hidden;
-  width: $width;
   height: 100%;
   display: inline-flex;
   justify-content: center;
@@ -15,7 +15,11 @@
   transition: background-color 125ms ease-in-out, transform 75ms ease;
 
   &:hover {
-    background-color: lighten($bg, $lighten-amount);
+    @if $change-type == lighten {
+      background-color: lighten($bg, $change-amount);
+    } @else {
+      background-color: darken($bg, $change-amount);
+    }
   }
 
   &:active {
