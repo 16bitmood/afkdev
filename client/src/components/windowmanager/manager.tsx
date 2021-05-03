@@ -1,8 +1,10 @@
 import { FC, useContext } from "react";
 
 import { WinsContext } from "../../context/windows";
+import { TaskbarContextProvider } from "../../context/taskbar";
 import { Taskbar } from "./taskbar";
 import { Win } from "./window";
+import { DropdownMenu } from "./dropdownmenu";
 
 export const WindowManager: FC = () => {
   const { wins } = useContext(WinsContext);
@@ -15,7 +17,10 @@ export const WindowManager: FC = () => {
         backgroundSize: "cover",
       }}
     >
-      <Taskbar />
+      <TaskbarContextProvider>
+        <Taskbar />
+        <DropdownMenu />
+      </TaskbarContextProvider>
       {wins
         .map((o) => o.id)
         .map((id) => (

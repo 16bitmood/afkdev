@@ -1,0 +1,54 @@
+@use 'mixins' as *;
+@use 'variables' as *;
+@use 'colors' as *;
+
+.dropdown-menu {
+  $BG: black;
+  $FG: white;
+
+  font: inherit;
+  position: absolute;
+  top: $TASKBAR-HEIGHT;
+  left: 0;
+  width: 500px;
+  z-index: $TASKBAR-Z-INDEX - 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 100px 100px 100px 100px;
+
+  button {
+    font: inherit;
+    border: none;
+    padding: 15px;
+    background-color: $BG;
+    color: $FG;
+    transition: all ease-in-out 200ms;
+
+    &:hover {
+      background-color: $FG;
+      color: $BG;
+    }
+  }
+
+  &-transition {
+    $TIME: 300ms;
+
+    &-enter {
+      transform: translateY(-500px);
+    }
+
+    &-enter-active {
+      transform: translateY(0);
+      transition: transform $TIME ease-out;
+    }
+
+    &-exit {
+      transform: translateY(0);
+    }
+
+    &-exit-active {
+      transform: translateY(-500px);
+      transition: transform $TIME ease-out;
+    }
+  }
+}

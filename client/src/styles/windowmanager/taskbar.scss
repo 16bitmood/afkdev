@@ -1,9 +1,11 @@
 @use 'mixins' as *;
 @use 'variables' as *;
+@use 'colors' as *;
 
 .taskbar {
   font: inherit;
   position: fixed;
+  z-index: $TASKBAR-Z-INDEX;
   top: 0;
   left: 0;
   display: flex;
@@ -39,7 +41,7 @@
       color: $ACCENT-COLOR;
     }
 
-    &-opened {
+    &-active {
       @include minimal-button(darken($TASKBAR-FG, 10%), $TASKBAR-BG, 0%, 100px);
 
       &:hover {

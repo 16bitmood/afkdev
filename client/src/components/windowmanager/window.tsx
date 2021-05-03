@@ -48,7 +48,7 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
     onExit,
   } = useWindow(winId);
 
-  const className = `window${maximized ? "-maximized" : ""}`;
+  const className = `window${maximized ? "-maximized" : ""}`; // TODO: React Transition Group
 
   return (
     <Rnd
@@ -60,7 +60,9 @@ export const Win: FC<WinProps> = ({ id: winId }) => {
         overflowX: "hidden",
         overflowY: "hidden",
       }}
-      onDrag={(_e, data) => setPosition({ x: data.x, y: data.y })}
+      onDrag={(_e, data) => {
+        setPosition({ x: data.x, y: data.y });
+      }}
       onDragStart={onFocus}
       size={maximized ? { height: "100%", width: "100%" } : size}
       position={maximized ? { x: 0, y: 40 } : position}

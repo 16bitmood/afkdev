@@ -1,54 +1,26 @@
 import "../../styles/windowmanager/taskbar.scss";
 
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext } from "react";
 import { Icon } from "@mdi/react";
 import { mdiCubeOutline } from "@mdi/js";
 
 import { Clock } from "../clock";
 import { Stats } from "../stats";
 import { WinsContext } from "../../context/windows";
-import { SessionContext } from "../../context/session";
-
-const FloatMenu: FC = () => {
-  const { sessionLogout } = useContext(SessionContext);
-  const { spawn } = useContext(WinsContext);
-  const Entries = "taskbar-float-menu-button";
-
-  // eslint-disable-next-line
-  const FloatButton = ({ onClick, text }: any) => (
-    <button type="button" onClick={onClick} className={Entries}>
-      {text}
-    </button>
-  );
-  return (
-    <div className="taskbar-float-menu">
-      <FloatButton onClick={() => spawn("term")} text="Term" />
-      <FloatButton onClick={() => spawn("dummy")} text="Dummy" />
-      <FloatButton onClick={sessionLogout} text="Logout" />
-    </div>
-  );
-};
+import { TaskbarContext } from "../../context/taskbar";
 
 const MenuButton: FC = () => {
-  const { wins } = useContext(WinsContext);
-  const [menuOpened, setMenuOpened] = useState(false);
-  const onClick = () => {
-    setMenuOpened((mo) => !mo);
-  };
-
-  useEffect(() => {
-    setMenuOpened(false);
-  }, [wins]);
-
-  const className = `taskbar-menu-button${menuOpened ? "-opened" : ""}`;
-
+  const { showMenu, toggleShowMenu } = useContext(TaskbarContext);
   return (
-    <>
-      <button type="button" onClick={onClick} className={className}>
-        <Icon size="30px" path={mdiCubeOutline} />
-      </button>
-      {menuOpened ? <FloatMenu /> : <></>}
-    </>
+    <button
+      type="button"
+      onClick={toggleShowMenu}
+      className={
+        showMenu ? "taskbar-menu-button-active" : "taskbar-menu-button"
+      }
+    >
+      <Icon size="30px" path={mdiCubeOutline} />
+    </button>
   );
 };
 
