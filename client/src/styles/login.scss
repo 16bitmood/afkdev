@@ -1,6 +1,7 @@
 @use 'colors' as *;
 @use 'mixins' as *;
 @use 'animations' as *;
+@use 'transitions';
 
 .wrapper-login-form {
   @include flex-max-center;
@@ -9,7 +10,6 @@
   font-family: "Lato", sans-serif;
   font-size: 0.875em;
   flex-direction: column;
-  animation: ease-out fade 1s;
 
   header {
     font-size: 2.3em;

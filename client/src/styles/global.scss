@@ -1,9 +1,17 @@
 @use 'mixins' as *;
 @use 'colors' as *;
+@use 'transitions';
 
 // Fonts
 @include google-font("Lato:100,300,400");
 @include google-font("Inconsolata");
+
+.fade {
+  @include transitions.fade(0.5s);
+}
+.expand {
+  @include transitions.expand(0.5s);
+}
 
 html {
   overflow: hidden;
