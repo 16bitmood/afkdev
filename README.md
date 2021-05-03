@@ -13,3 +13,6 @@
 * Set user configuration in users.json.
     * Generate `hashedPassword` with `echo -n password | sha256sum`
 * `npm run install && npm run dev` will start dev server on `http://localhost:3000`
+
+## Acknowledgements:
+* Inspiration + linter, autoformatter configs from [x](https://github.com/DustinBrett/x/).
