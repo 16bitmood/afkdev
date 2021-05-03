@@ -46,7 +46,6 @@ export const logOut = (req: Request, res: Response): void => {
       console.error(`${err}Unimplemented`);
     }
   });
-  res.json({ message: "OK" });
 };
 
 export const getSessionApp = (req: Request, appId: number): WebApp => {
