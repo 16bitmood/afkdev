@@ -1,4 +1,6 @@
-import { createContext, FC, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
+
+import { WinsContext } from './windows';
 
 export type TaskbarContextType = {
   showMenu: boolean;
@@ -16,6 +18,10 @@ export const TaskbarContext = createContext(initialTaskbarContext);
 
 export const TaskbarContextProvider: FC = ({ children }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const { wins } = useContext(WinsContext);
+  useEffect(() => {
+    setShowMenu(false);
+  }, [wins]);
 
   const ctx: TaskbarContextType = {
     showMenu,
