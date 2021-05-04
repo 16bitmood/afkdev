@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { isLoggedIn, setSessionApp } from "../session";
+import { isLoggedIn, setSessionApp, genSessionAppId } from "../session";
 import { BadRequest } from "../errors";
 import { makeApp } from "../webapps";
 
@@ -13,7 +13,7 @@ router.get("/manage/create/:appName", (req, res) => {
   }
   const { appName } = req.params;
   const app = makeApp(appName, req.session.username);
-  const { id } = app;
+  const id = genSessionAppId(req);
   setSessionApp(req, id, app);
 
   res.json({ appId: id });

@@ -33,7 +33,7 @@ interface WebTermCommand {
 }
 
 export class WebTerm {
-  public id: number;
+  public pid: number;
 
   private initialData: string;
 
@@ -45,9 +45,9 @@ export class WebTerm {
     this.term.onData((data) => {
       this.initialData += data;
     });
-    this.id = this.term.pid;
+    this.pid = this.term.pid;
 
-    console.info(`Spawned: ${this.id}`);
+    console.info(`Spawned: ${this.pid}`);
   }
 
   resize(cols: number, rows: number): void {

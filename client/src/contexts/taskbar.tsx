@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 
-import { WinsContext } from './windows';
+import { WinsContext } from "./windows";
 
 export type TaskbarContextType = {
   showMenu: boolean;

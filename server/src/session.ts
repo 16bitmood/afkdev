@@ -48,6 +48,16 @@ export const logOut = (req: Request, _res: Response): void => {
   });
 };
 
+export const genSessionAppId = (req: Request): number => {
+  const { sessionID } = req;
+  const apps = sessionApps.get(sessionID);
+  if (apps && apps.size !== 0) {
+    const maxKey = Math.max(...apps.keys());
+    return maxKey + 1;
+  }
+  return 0;
+};
+
 export const getSessionApp = (req: Request, appId: number): WebApp => {
   if (!isLoggedIn(req)) {
     throw new Unauthorized();
