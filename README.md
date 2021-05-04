@@ -2,10 +2,8 @@
 **WIP** Remote Desktop Environment.
 
 ## Screenshots
-![Screenshot 1](/assets/01.png)
-![Screenshot 4](/assets/04.png)
-![Screenshot 3](/assets/03.png)
-![Screenshot 2](/assets/02.png)
+![Login](/assets/01.png)
+![Main](/assets/02.png)
 
 ## Linux Instructions:
 * copy `.env.d.example` to `.env.d`
