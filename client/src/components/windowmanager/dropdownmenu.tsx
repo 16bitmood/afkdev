@@ -25,6 +25,7 @@ export const DropdownMenu: FC = () => {
     >
       <div className="dropdown-menu">
         <FloatButton onClick={() => spawn("term")} text="Term" />
+        <FloatButton onClick={() => spawn("filemanager")} text="File Manager" />
         <FloatButton onClick={() => spawn("dummy")} text="Dummy" />
         <FloatButton onClick={sessionLogout} text="Logout" />
       </div>

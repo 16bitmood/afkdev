@@ -1,6 +1,7 @@
 import type { ITerminalOptions, ITheme } from "xterm";
 
 import { WebTerm } from "./webterm";
+import { WebFileManager } from "./webfilemanager";
 import { Dummy } from "./dummy";
 
 export const termScheme: ITheme = {
@@ -27,7 +28,7 @@ export const termScheme: ITheme = {
 
 export type WebAppOptions = {
   id: number;
-  name: "term" | "dummy";
+  name: "term" | "dummy" | "filemanager";
   appOptions?: ITerminalOptions | null;
 };
 
@@ -38,6 +39,7 @@ const initialAppOptions = {
     theme: termScheme,
   } as ITerminalOptions,
   dummy: null,
+  filemanager: null,
 };
 
 export const createWebApp = (options: WebAppOptions): JSX.Element => {
@@ -49,6 +51,8 @@ export const createWebApp = (options: WebAppOptions): JSX.Element => {
   switch (options.name) {
     case "term":
       return <WebTerm {...options} />;
+    case "filemanager":
+      return <WebFileManager {...options}/>
     case "dummy":
       return <Dummy {...options} />;
     default:

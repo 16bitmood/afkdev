@@ -50,7 +50,7 @@ export const isLoggedIn = async (): Promise<boolean> => {
 
 export const createApp = async (appName: string): Promise<number | null> => {
   try {
-    const res = await axios.get(`/api/manage/create/${appName}`);
+    const res = await axios.put(`/api/manage/create/${appName}`);
     return res.data.appId;
   } catch (e) {
     return null;

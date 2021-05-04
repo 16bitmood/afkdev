@@ -1,6 +1,6 @@
 import { FC, useReducer, createContext, useState } from "react";
 
-import { mdiCircle, mdiConsole } from "@mdi/js";
+import { mdiCircle, mdiConsole, mdiFolderOutline } from "@mdi/js";
 import { WinState, Size, Position } from "../components/windowmanager";
 import { createWebApp } from "../components/webapps";
 
@@ -18,6 +18,8 @@ const getAppIconPath = (name: string): string => {
       return mdiConsole;
     case "dummy":
       return mdiCircle;
+    case "filemanager":
+      return mdiFolderOutline;
     default:
       throw new Error("icon not found");
   }
@@ -28,7 +30,7 @@ export interface WinsContextType {
   wins: WinState[];
   // wins: Map<number, WinState>; // TODO: Should I just use an object?
   focused: number;
-  spawn: (name: "term" | "dummy") => void; // TODO:
+  spawn: (name: "term" | "dummy" | "filemanager") => void; // TODO:
   kill: (id: number) => void;
   focus: (id: number) => void;
   toggleMinimize: (id: number) => void;
@@ -53,7 +55,7 @@ type WindowsReducerActions = {
     | "setTitle";
   id?: number;
   needResize?: boolean;
-  name?: "term" | "dummy"; // TODO:
+  name?: "term" | "dummy" | "filemanager"; // TODO:
   size?: Size;
   position?: Position;
   title?: string;
@@ -77,7 +79,7 @@ export const WinsContext = createContext(initialWindowsContext);
 
 const initialWindowProps: Partial<WinState> = {
   position: { x: 0, y: 50 },
-  size: { height: 400, width: 600 },
+  size: { height: 400, width: 700 },
   needResize: true,
   minimized: false,
   maximized: false,

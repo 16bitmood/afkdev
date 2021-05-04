@@ -1,0 +1,155 @@
+@use 'colors' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+
+@mixin top-style($bg, $fg, $accent) {
+    $t: 100ms;
+
+    background-color: lighten($bg, 10%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+
+    .first-item {
+        border-left: 1px solid darken($fg, 20%);
+        border-radius: 10px 0 0 10px;
+    }
+
+    .last-item {
+        border-right: 1px solid darken($fg, 20%);
+        border-radius: 0 10px 10px 0;
+    }
+
+
+    button {
+        box-sizing: border-box;
+        height: 30px;
+        background-color: $bg;
+        width: 60px;
+        color: lighten($fg,20%);
+        border: 2px solid $bg;
+        transition: all $t ease-in-out;
+        border-top:1px solid darken($fg, 20%);
+        border-bottom:1px solid darken($fg, 20%);
+
+        &:hover, &:focus {
+            border-color: $accent;
+            background-color: $accent;
+            color: $bg;
+        }
+    }
+
+    input {
+        font: inherit;
+        color: lighten($fg,20%);
+        background-color: $bg;
+        width: auto;
+        box-sizing: border-box;
+        height: 30px;
+        padding: 5px 15px 5px 15px;
+        transition: all $t ease-in-out;
+        border: 1px solid darken($FG, 20%);
+
+        &:hover, &:focus {
+            border-color: $FG;
+            background-color: darken($BG, 10%);
+        }
+    }
+
+}
+
+.filemanager {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background-color: $BG;
+    color: $FG;
+    display: grid;
+    grid-template-columns: 300px auto ;
+    grid-template-rows: 50px auto 20px;
+    grid-template-areas:
+        "search toolbar"
+        "sidebar main"
+        "sidebar-footer main-footer ";
+
+    &-sidebar {
+        opacity: 0.6;
+        border-right: 2px solid black;
+        grid-area: sidebar;
+        font: inherit;
+        background-color: $BG;
+        color: white;
+    }
+
+    &-search {
+        font: inherit;
+        grid-area: search;
+        @include top-style($BG, $FG, $C5);
+    }
+
+    &-toolbar {
+        font: inherit;
+        grid-area: toolbar;
+        @include top-style($BG, $FG, $C2);
+    }
+
+    &-main {
+        &-container {
+            padding: 10px;
+            grid-area: main;
+            height: 100%;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        font: inherit;
+        display: flex;
+        flex-flow: row wrap;
+        align-content: flex-start;
+        overflow-y: scroll;
+
+        &-item {
+            box-sizing: border-box;
+            margin: 20px;
+            width: 130px;
+            height: 130px;
+            padding: 5px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                border: 1px solid $FG;
+                border-radius: 5px;
+                background-color: $BG;
+                color: lighten($FG, 30%);
+            }
+
+            &-icon {
+                overflow: hidden;
+                padding: 5px;
+                height: 100px;
+                width: 100px;
+            }
+
+            &-text {
+                font: inherit;
+                font-size: 15px;
+            }
+
+        }
+    }
+
+    &-sidebar-footer {
+        font: inherit;
+        grid-area: sidebar-footer;
+    }
+
+    &-main-footer {
+        font: inherit;
+        grid-area: main-footer;
+    }
+
+}
