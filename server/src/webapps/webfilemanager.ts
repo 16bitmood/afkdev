@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import WebSocket from "ws";
 
 type WebFileManagerCommand =
@@ -25,8 +26,9 @@ export class WebFileManager {
   }
 
   connect(ws: WebSocket): void {
+    console.log('ws connected');
     this.ws = ws;
-    ws.on("message", this.handleCommand);
+    ws.on("message", (d) => {console.log(d); this.handleCommand(JSON.parse(d as string))});
 
     ws.on("close", () => console.info("File Manager Closed"));
   }
@@ -35,8 +37,9 @@ export class WebFileManager {
     try {
       switch (command.option) {
         case "get": {
-          const files = await fs.promises.readdir(command.path);
-          this.ws?.send({ result: files });
+          const dirents = await fs.promises.readdir(command.path, {withFileTypes: true});
+          const files = dirents.map(e => e.isDirectory() ? [e.name, null] : [e.name, path.extname(e.name)]);
+          this.ws?.send(JSON.stringify({ result: files }));
           break;
         }
         case "create": {
@@ -48,7 +51,7 @@ export class WebFileManager {
           break;
         }
         default:
-          this.ws?.send({ error: "Invalid Command" });
+          this.ws?.send(JSON.stringify({ error: "Invalid Command" }));
       }
     } catch (e) {
       this.ws?.send({ error: e });

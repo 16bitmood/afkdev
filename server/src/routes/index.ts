@@ -9,6 +9,6 @@ export const router = Router();
 router.use("/api", login);
 router.use("/api", manage);
 router.use("/api", stats);
-router.get("/*", (req, res) => {
+router.get("/*", (_req, res) => {
   res.redirect("/");
 });

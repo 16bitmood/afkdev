@@ -6,7 +6,7 @@ import { makeApp } from "../webapps";
 
 const router = Router();
 
-router.get("/manage/create/:appName", (req, res) => {
+router.put("/manage/create/:appName", (req, res) => {
   if (!isLoggedIn(req) || !req.session.username) {
     // TODO: session type is messed up
     throw new BadRequest("Client must be logged in to access /manage");

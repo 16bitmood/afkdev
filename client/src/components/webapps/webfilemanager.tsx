@@ -107,7 +107,7 @@ export const WebFileManager: FC<WebAppOptions> = () => {
           &gt;&gt;
         </button>
       </div>
-      <div className="filemanager-sidebar">this will have favourite items</div>
+      <div className="filemanager-sidebar">TODO:</div>
       <div className="filemanager-main-container">
         <div className="filemanager-main">
           {files.map(([name, type]) => (

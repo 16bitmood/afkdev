@@ -1,9 +1,10 @@
 import { WebTerm } from "./webterm";
 import { BadRequest } from "../errors";
 import { USERS } from "../config";
+import { WebFileManager } from "./webfilemanager";
 
 // Add others as sum types
-export type WebApp = WebTerm;
+export type WebApp = WebTerm | WebFileManager;
 export type WebAppConfig = { cmd: string; args: string[] };
 
 const getUserAppConfig = (username: string, app: "term"): WebAppConfig => {
@@ -27,8 +28,8 @@ export const makeApp = (appName: string, username: string): WebApp => {
       });
     }
 
-    case "fileManager":
-      throw new BadRequest(`program ${appName} not implemented`);
+    case "filemanager":
+      return new WebFileManager();
 
     default:
       throw new BadRequest(`program ${appName} not found`);
